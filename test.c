@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <mlx.h>
+#include "minilibx/mlx.h"
 
 typedef struct		data_s
 {
