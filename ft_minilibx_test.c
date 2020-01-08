@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:49:14 by gas               #+#    #+#             */
-/*   Updated: 2019/12/13 18:43:09 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/08 18:02:02 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,25 @@ int	deal_key(int key, img_t *datapepe)
 	test(key);
 	if (key == 13)
 		{
-			datapepe->y -= 25;
+			datapepe->y -= 10;
 			mlx_clear_window (datapepe->mlx, datapepe->win);
 			mlx_put_image_to_window(datapepe->mlx, datapepe->win, datapepe->ptr, datapepe->x, datapepe->y);
 		}
 		if (key == 1)
 		{
-			datapepe->y += 25;
+			datapepe->y += 10;
 			mlx_clear_window (datapepe->mlx, datapepe->win);
 			mlx_put_image_to_window(datapepe->mlx, datapepe->win, datapepe->ptr, datapepe->x, datapepe->y);
 		}
 				if (key == 0)
 		{
-			datapepe->x -= 25;
+			datapepe->x -= 10;
 			mlx_clear_window (datapepe->mlx, datapepe->win);
 			mlx_put_image_to_window(datapepe->mlx, datapepe->win, datapepe->ptr, datapepe->x, datapepe->y);
 		}
 				if (key == 2)
 		{
-			datapepe->x += 25;
+			datapepe->x += 10;
 			mlx_clear_window (datapepe->mlx, datapepe->win);
 			mlx_put_image_to_window(datapepe->mlx, datapepe->win, datapepe->ptr, datapepe->x, datapepe->y);
 		}
