@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/15 17:20:17 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/16 12:03:45 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #include <string.h>
 #include <unistd.h>
 #include <mlx.h>
-#define mapWidth 24
-#define mapHeight 24
-#define screenWidth 720
-#define screenHeight 720
-#define h 480
+#define MAPWIDTH 24
+#define MAPHEIGHT 24
+#define SCREENWIDTH 720
+#define SCREENHEIGHT 720
+#define H 480
 
 typedef struct		mlx_s
 {
@@ -30,21 +30,35 @@ typedef struct		mlx_s
 
 typedef struct		player_s
 {
-	double			posX;
-	double			posY;
-	double			dirX;
-	double			dirY;
-	double			planeX;
-	double			planeY;
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			plane_x;
+	double			plane_y;
+	double			camera_x;
 }					player_t;
 
 typedef struct		world_s
 {
 	double			time;
-	double			oldTime;
-	double			mapX;
-	double			mapY;
-}
+	double			oldtime;
+	double			x;
+	double			y;
+	int				step_x;
+	int				step_y;
+}					world_t;
+
+typedef struct		ray_s
+{
+	double			dir_x;
+	double			dir_y;
+	double			side_x;
+	double			side_y;
+	double			delta_x;
+	double			delta_y;
+	double			walldist;
+}					ray_t;
 
 int worldMap[mapWidth][mapHeight] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -73,9 +87,11 @@ int worldMap[mapWidth][mapHeight] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int drawLine(void *ptr, void *win, int x, int start, int end, int color)
+int drawLine(mlx_t *mlx, int x, int start, int end, int color)
 {
-	int i = start;
+	int i;
+
+	i = start;
 	while (i <= end)
 	{
 		mlx_pixel_put(ptr, win, x, i, color);
@@ -96,17 +112,60 @@ int	rgb_int(int red, int green, int blue)
 
 void	player_init(player_t *pl)
 {
-	pl->posX = 22;
-	pl->posY = 12;
-	pl->dirX = -1;
-	pl->dirY = 0;
-	pl->planeX = 0;
-	pl->planeY = 0.66;
+	pl->pos_x = 22;
+	pl->pos_y = 12;
+	pl->dir_x = -1;
+	pl->dir_y = 0;
+	pl->plane_x = 0;
+	pl->plane_y = 0.66;
 }
 
-void	raycast(player_t *pl, mlx_t *mlx, world_t *map)
+void	get_step(world_t *map, ray_t *ray)
 {
+	if (ray->dir_x < 0)
+	{
+		map->step_x = -1;
+		ray->side_x = (pl->pos_x - map->x) * ray->delta_x;
+	}
+	else
+	{
+		map->step_x = 1;
+		ray->side_x = (map->x + 1.0 - pl->pos_x) * ray->delta_x;
+	}
+	if (ray->dir_y < 0)
+	{
+		map->step_y = -1;
+		ray->side_y = (pl->pos_y - map->y) * ray->delta_y;
+	}
+	else
+	{
+		map->step_y = 1;
+		ray->side_y = (map->y + 1.0 - pl->pos_y) * ray->delta_y;
+	}
+}
 
+void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
+{
+	int x;
+	int hit;
+	int side;
+
+	x = 0;
+	while (x <= screenWidth)
+	{
+		pl->camera_x = 2 * x / (double)screenWidth - 1;
+		ray->dir_x = pl->dir_x + pl->plane_x * pl->camera_x;
+		ray->dir_y = pl->dir_y + pl->plane_y * pl->camera_x;
+
+		map->x = (int)pl->pos_x;
+		map->y = (int)pl->pos_y;
+		ray->delta_x = fabs(1 / ray->dir_x);
+		ray->delta_y = fabs(1 / ray->dir_y);
+
+		get_step(map, ray);
+
+		x++;
+	}
 }
 
 int main()
@@ -119,12 +178,8 @@ int main()
 		return (EXIT_FAILURE);
 	if (!(mlx.win = mlx_new_window(mlx.ptr, screenWidth, screenHeight, "cub3d")))
 		return (EXIT_FAILURE);
-	while(42)
-	{
-	
-	mlx_hook(data.mlx_win, 2, 1, deal_key, (void *)&data);
+	mlx_hook(data.mlx_win, 2, 1, run_game, (void *)&data);
 	mlx_loop(data.mlx_ptr);
-	}
 }
 
 
