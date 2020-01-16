@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/16 12:03:45 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/16 12:29:29 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 	int side;
 
 	x = 0;
-	while (x <= screenWidth)
+	while(x <= screenWidth)
 	{
 		pl->camera_x = 2 * x / (double)screenWidth - 1;
 		ray->dir_x = pl->dir_x + pl->plane_x * pl->camera_x;
@@ -163,7 +163,19 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		ray->delta_y = fabs(1 / ray->dir_y);
 
 		get_step(map, ray);
+		while(!hit)
+		{
+			if (ray->side_x < ray->side_y)
+			{
+				ray->side_x += ray->delta_x;
+				map->x += map->step_x;
+				side = 0;
+			}
+			else
+			{
 
+			}
+		}
 		x++;
 	}
 }
