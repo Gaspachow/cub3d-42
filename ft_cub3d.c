@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/16 15:53:54 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/17 14:28:14 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,18 @@
 #include <mlx.h>
 #define MAPW 24
 #define MAPH 24
-#define SCREENW 64
-#define SCREENH 64
-#define H 64
+#define SCREENW 640
+#define SCREENH 480
 
 typedef struct		mlx_s
 {
 	void			*ptr;
 	void			*win;
+	void			*img;
+	int				*data_addr;
+	int				bits;
+	int				size_line;
+	int				endian;
 	int				l_height;
 	int				l_start;
 	int				l_end;
@@ -81,7 +85,7 @@ int worldmap[MAPW][MAPH] = {
   {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
   {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -99,20 +103,6 @@ int worldmap[MAPW][MAPH] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int drawline(mlx_t *mlx, int x)
-{
-	int i;
-
-	i = mlx->l_start;
-	while (i <= mlx->l_end)
-	{
-		mlx_pixel_put(mlx->ptr, mlx->win, x, i, mlx->color);
-		i++;
-	}
-	return (1);
-}
-
-
 int	rgb_int(int red, int green, int blue)
 {
 	int	rgb;
@@ -122,10 +112,44 @@ int	rgb_int(int red, int green, int blue)
 	return (rgb);
 }
 
+int drawline(mlx_t *mlx, int x)
+{
+	int i;
+	int end;
+	int *draw;
+
+	i = 0;
+	end = mlx->l_end;
+	draw = mlx->data_addr;
+	// while (i <= end)
+	// {
+	// 	mlx_pixel_put(mlx->ptr, mlx->win, x, i, mlx->color);
+	// 	i++;
+	// }
+	while (i < mlx->l_start)
+	{
+		*(draw + x + i * mlx->size_line / 4) = rgb_int(0, 0, 0);
+		i++;
+	}
+
+	while (i < end)
+	{
+		*(draw + x + i * mlx->size_line / 4) = mlx->color;
+		i++;
+	}
+
+	while (i < SCREENH)
+	{
+		*(draw + x + i * mlx->size_line / 4) = rgb_int(125, 125, 125);
+		i++;
+	}
+	return (1);
+}
+
 void	player_init(player_t *pl)
 {
 	pl->pos_x = 22;
-	pl->pos_y = 12;
+	pl->pos_y = 10;
 	pl->dir_x = -1;
 	pl->dir_y = 0;
 	pl->plane_x = 0;
@@ -163,9 +187,9 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 	int side;
 
 	x = 0;
-	mlx_clear_window (mlx->ptr, mlx->win);
 	while(x < SCREENW)
 	{
+		hit = 0;
 		pl->camera_x = 2 * x / (double)SCREENW - 1;
 		ray->dir_x = pl->dir_x + pl->plane_x * pl->camera_x;
 		ray->dir_y = pl->dir_y + pl->plane_y * pl->camera_x;
@@ -176,7 +200,7 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		ray->delta_y = fabs(1 / ray->dir_y);
 
 		get_step(map, ray, pl);
-		while(!hit)
+		while(hit == 0)
 		{
 			if (ray->side_x < ray->side_y)
 			{
@@ -193,7 +217,6 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 			if (worldmap[map->x][map->y] > 0)
 				hit = 1;
 		}
-
 		if (!side)
 			ray->walldist = (map->x - pl->pos_x + (1 - map->step_x) / 2) / ray->dir_x;
 		else
@@ -211,20 +234,73 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
     	{
         case 1:  mlx->color = rgb_int(204, 0, 0);  break; //red
         case 2:  mlx->color = rgb_int(128, 255, 0);  break; //green
-        case 3:  mlx->color = rgb_int(0, 128, 255);   break; //blue
+        case 3:  mlx->color = rgb_int(250, 22, 197);   break; //blue
         case 4:  mlx->color = rgb_int(255, 255, 255);  break; //white
         default: mlx->color = rgb_int(255, 255, 0); break; //yellow
     	}
 
 		if (side == 1)
 			mlx->color /= 2;
-		printf("walldist is %f - line height is %i - Start is %i - end is %i\n", ray->walldist, mlx->l_height, mlx->l_start, mlx->l_end);
 		drawline(mlx, x);
 		x++;
 	}
 }
 
-int	run_game(int key, param_t *params)
+void	rotation(int key, player_t *pl)
+{
+	double	old_dir;
+	double	old_plane;
+	double	speed;
+
+	old_dir = pl->dir_x;
+	old_plane = pl->plane_x;
+	speed = 0.05;
+	if (key == 124)
+	{
+		pl->dir_x = (pl->dir_x * cos(-speed) - pl->dir_y * sin(-speed));
+		pl->dir_y = (old_dir * sin(-speed) + pl->dir_y * cos(-speed));
+		pl->plane_x = (pl->plane_x * cos(-speed) - pl->plane_y * sin(-speed));
+		pl->plane_y = (old_plane * sin(-speed) + pl->plane_y * cos(speed));
+	}
+	if (key == 123)
+	{
+		pl->dir_x = (pl->dir_x * cos(speed) - pl->dir_y * sin(speed));
+		pl->dir_y = (old_dir * sin(speed) + pl->dir_y * cos(speed));
+		pl->plane_x = (pl->plane_x * cos(speed) - pl->plane_y * sin(speed));
+		pl->plane_y = (old_plane * sin(speed) + pl->plane_y * cos(speed));
+	}
+}
+
+int		movement(int key, param_t *params)
+{
+	double speed;
+
+	speed = 0.2;
+	if (key == 13)
+	{
+		params->pl->pos_x += params->pl->dir_x * speed;
+		params->pl->pos_y += params->pl->dir_y * speed;
+	}
+	if (key == 1)
+	{
+		params->pl->pos_x -= params->pl->dir_x * speed;
+		params->pl->pos_y -= params->pl->dir_y * speed;
+	}
+	if (key == 0)
+	{
+		params->pl->pos_y += params->pl->dir_x * speed;
+		params->pl->pos_x -= params->pl->dir_y * speed;
+	}
+	if (key == 2)
+	{
+		params->pl->pos_y -= params->pl->dir_x * speed;
+		params->pl->pos_x += params->pl->dir_y * speed;
+	}
+	if (key == 123 || key == 124)
+		rotation(key, params->pl);
+}
+
+int	run_game(param_t *params)
 {
 	mlx_t		*mlx;
 	player_t	*pl;
@@ -236,6 +312,7 @@ int	run_game(int key, param_t *params)
 	map = params->map;
 	ray = params->ray;
 	raycast(pl, mlx, map, ray);
+	mlx_put_image_to_window(params->mlx->ptr, params->mlx->win, params->mlx->img, 0, 0);
 	return (0);
 }
 
@@ -257,7 +334,10 @@ int main()
 		return (EXIT_FAILURE);
 	if (!(mlx.win = mlx_new_window(mlx.ptr, SCREENW, SCREENH, "cub3d")))
 		return (EXIT_FAILURE);
-	mlx_hook(mlx.win, 2, 1, run_game, (void *)&params);
+	mlx.img = mlx_new_image(mlx.ptr, SCREENW, SCREENH);
+	mlx.data_addr = (int *)mlx_get_data_addr(mlx.img, &(mlx.bits), &(mlx.size_line), &(mlx.endian));
+	mlx_hook(mlx.win, 2, 1, movement, (void *)&params);
+	mlx_loop_hook ( mlx.ptr, run_game, (void *)&params);
 	mlx_loop(mlx.ptr);
 }
 
