@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_minilibx_test.c                                 :+:      :+:    :+:   */
+/*   backup.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:49:14 by gas               #+#    #+#             */
-/*   Updated: 2020/01/08 18:02:02 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/20 15:14:39 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(void)
 		return (EXIT_FAILURE);
 	datapepe.mlx = data.mlx_ptr;
 	datapepe.win = data.mlx_win;
-	datapepe.ptr = mlx_xpm_file_to_image(data.mlx_ptr, "pepe.xpm", &datapepe.h, &datapepe.w);
+	datapepe.ptr = mlx_xpm_file_to_image(data.mlx_ptr, "textures/cat1.xpm", &datapepe.h, &datapepe.w);
 	printf("height and width are %i and %i", datapepe.h, datapepe.w);
 	mlx_put_image_to_window(data.mlx_ptr, data.mlx_win, datapepe.ptr, 900, 500);
 

@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/20 12:50:07 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/20 16:28:56 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct		mlx_s
 	int				l_start;
 	int				l_end;
 	int				color;
+	void			*texture;
+	int				*texture_data;
+	int				text_h;
+	int				text_w;
+	int				text_sizeline;
+	int				text_sizebit;
+	int				text_endian;
 }					mlx_t;
 
 typedef struct		player_s
@@ -115,27 +122,28 @@ int	rgb_int(int red, int green, int blue)
 int drawline(mlx_t *mlx, int x)
 {
 	int i;
+	int j;
 	int end;
 	int *draw;
+	int *text;
 
 	i = 0;
+	j = 0;
 	end = mlx->l_end;
 	draw = mlx->data_addr;
-	// while (i <= end)
-	// {
-	// 	mlx_pixel_put(mlx->ptr, mlx->win, x, i, mlx->color);
-	// 	i++;
-	// }
+	text = mlx->texture_data;
 	while (i < mlx->l_start)
 	{
-		*(draw + x + i * mlx->size_line / 4) = rgb_int(0, 0, 0);
+		*(draw + x + i * mlx->size_line / 4) = rgb_int(50, 0, 0);
 		i++;
 	}
 
 	while (i < end)
 	{
-		*(draw + x + i * mlx->size_line / 4) = mlx->color;
+		*(draw + x + i * mlx->size_line / 4) = *(text + x + j * mlx->text_sizeline / 4);
+		// *(draw + x + i * mlx->size_line / 4) = mlx->color;
 		i++;
+		j++;
 	}
 
 	while (i < SCREENH)
@@ -356,7 +364,9 @@ int main()
 	if (!(mlx.win = mlx_new_window(mlx.ptr, SCREENW, SCREENH, "cub3d")))
 		return (EXIT_FAILURE);
 	mlx.img = mlx_new_image(mlx.ptr, SCREENW, SCREENH);
+	mlx.texture = mlx_xpm_file_to_image(mlx.ptr, "textures/cat2.xpm", &mlx.text_h, &mlx.text_w);
 	mlx.data_addr = (int *)mlx_get_data_addr(mlx.img, &(mlx.bits), &(mlx.size_line), &(mlx.endian));
+	mlx.texture_data = (int *)mlx_get_data_addr(mlx.texture, &mlx.text_sizebit, &mlx.text_sizeline, &mlx.text_endian);
 	mlx_hook(mlx.win, 2, 1, movement, (void *)&params);
 	mlx_loop_hook ( mlx.ptr, run_game, (void *)&params);
 	mlx_loop(mlx.ptr);
