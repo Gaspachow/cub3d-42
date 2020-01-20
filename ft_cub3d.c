@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/17 14:28:14 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/20 10:57:46 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,10 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		ray->delta_y = fabs(1 / ray->dir_y);
 
 		get_step(map, ray, pl);
+
+		char walldir;
+
+		walldir = 0;
 		while(hit == 0)
 		{
 			if (ray->side_x < ray->side_y)
@@ -215,8 +219,26 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 				side = 1;
 			}
 			if (worldmap[map->x][map->y] > 0)
+			{
 				hit = 1;
+			}
 		}
+
+		if (side == 1)
+		{
+			if (map->y < pl->pos_y)
+				walldir = 'W';
+			else
+				walldir = 'E';
+		}
+		else
+		{
+			if (map->x < pl->pos_x)
+				walldir = 'N';
+			else
+				walldir = 'S';
+		}
+
 		if (!side)
 			ray->walldist = (map->x - pl->pos_x + (1 - map->step_x) / 2) / ray->dir_x;
 		else
@@ -230,17 +252,15 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		if (mlx->l_end >= SCREENH)
 			mlx->l_end = SCREENH - 1;
 
-		switch(worldmap[map->x][map->y])
+		switch(walldir)
     	{
-        case 1:  mlx->color = rgb_int(204, 0, 0);  break; //red
-        case 2:  mlx->color = rgb_int(128, 255, 0);  break; //green
-        case 3:  mlx->color = rgb_int(250, 22, 197);   break; //blue
-        case 4:  mlx->color = rgb_int(255, 255, 255);  break; //white
+        case 'N':  mlx->color = rgb_int(204, 0, 0);  break; //red
+        case 'W':  mlx->color = rgb_int(128, 255, 0);  break; //green
+        case 'E':  mlx->color = rgb_int(250, 22, 197);   break; //blue
+        case 'S':  mlx->color = rgb_int(255, 255, 255);  break; //white
         default: mlx->color = rgb_int(255, 255, 0); break; //yellow
     	}
 
-		if (side == 1)
-			mlx->color /= 2;
 		drawline(mlx, x);
 		x++;
 	}
@@ -254,7 +274,7 @@ void	rotation(int key, player_t *pl)
 
 	old_dir = pl->dir_x;
 	old_plane = pl->plane_x;
-	speed = 0.05;
+	speed = 0.08;
 	if (key == 124)
 	{
 		pl->dir_x = (pl->dir_x * cos(-speed) - pl->dir_y * sin(-speed));
@@ -275,7 +295,7 @@ int		movement(int key, param_t *params)
 {
 	double speed;
 
-	speed = 0.2;
+	speed = 0.3;
 	if (key == 13)
 	{
 		params->pl->pos_x += params->pl->dir_x * speed;
