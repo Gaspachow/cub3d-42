@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/20 10:57:46 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/20 12:50:07 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
     	{
         case 'N':  mlx->color = rgb_int(204, 0, 0);  break; //red
         case 'W':  mlx->color = rgb_int(128, 255, 0);  break; //green
-        case 'E':  mlx->color = rgb_int(250, 22, 197);   break; //blue
+        case 'E':  mlx->color = rgb_int(240, 140, 236);   break; //pink
         case 'S':  mlx->color = rgb_int(255, 255, 255);  break; //white
         default: mlx->color = rgb_int(255, 255, 0); break; //yellow
     	}
@@ -318,6 +318,7 @@ int		movement(int key, param_t *params)
 	}
 	if (key == 123 || key == 124)
 		rotation(key, params->pl);
+	return (0);
 }
 
 int	run_game(param_t *params)
