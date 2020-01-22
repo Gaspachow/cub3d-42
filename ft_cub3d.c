@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/20 16:28:56 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/22 11:22:29 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,38 @@
 #define SCREENW 640
 #define SCREENH 480
 
+typedef	struct		textures_s
+{
+	void			*texture1;
+	int				*texture1_data;
+	int				text1_h;
+	int				text1_w;
+	int				text1_sizeline;
+	int				text1_sizebit;
+	int				text1_endian;
+	void			*texture2;
+	int				*texture2_data;
+	int				text2_h;
+	int				text2_w;
+	int				text2_sizeline;
+	int				text2_sizebit;
+	int				text2_endian;
+	void			*texture3;
+	int				*texture3_data;
+	int				text3_h;
+	int				text3_w;
+	int				text3_sizeline;
+	int				text3_sizebit;
+	int				text3_endian;
+	void			*texture4;
+	int				*texture4_data;
+	int				text4_h;
+	int				text4_w;
+	int				text4_sizeline;
+	int				text4_sizebit;
+	int				text4_endian;
+}					texture_t;
+
 typedef struct		mlx_s
 {
 	void			*ptr;
@@ -34,13 +66,10 @@ typedef struct		mlx_s
 	int				l_start;
 	int				l_end;
 	int				color;
-	void			*texture;
+	texture_t		*texture;
 	int				*texture_data;
-	int				text_h;
-	int				text_w;
 	int				text_sizeline;
-	int				text_sizebit;
-	int				text_endian;
+
 }					mlx_t;
 
 typedef struct		player_s
@@ -260,14 +289,26 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		if (mlx->l_end >= SCREENH)
 			mlx->l_end = SCREENH - 1;
 
-		switch(walldir)
-    	{
-        case 'N':  mlx->color = rgb_int(204, 0, 0);  break; //red
-        case 'W':  mlx->color = rgb_int(128, 255, 0);  break; //green
-        case 'E':  mlx->color = rgb_int(240, 140, 236);   break; //pink
-        case 'S':  mlx->color = rgb_int(255, 255, 255);  break; //white
-        default: mlx->color = rgb_int(255, 255, 0); break; //yellow
-    	}
+		if (walldir == 'N')
+		{
+			mlx->texture_data = mlx->texture->texture1_data;
+			mlx->text_sizeline = mlx->texture->text1_sizeline;
+		}
+		else if (walldir == 'W')
+		{
+			mlx->texture_data = mlx->texture->texture2_data;
+			mlx->text_sizeline = mlx->texture->text2_sizeline;
+		}
+				else if (walldir == 'E')
+		{
+			mlx->texture_data = mlx->texture->texture3_data;
+			mlx->text_sizeline = mlx->texture->text3_sizeline;
+		}
+		else
+		{
+			mlx->texture_data = mlx->texture->texture4_data;
+			mlx->text_sizeline = mlx->texture->text4_sizeline;
+		}
 
 		drawline(mlx, x);
 		x++;
@@ -352,11 +393,13 @@ int main()
 	world_t		map;
 	ray_t		ray;
 	param_t		params;
+	texture_t	text;
 
 	params.mlx = &mlx;
 	params.pl = &one;
 	params.map = &map;
 	params.ray = &ray;
+	mlx.texture = &text;
 
 	player_init(&one);
 	if (!(mlx.ptr = mlx_init()))
@@ -364,9 +407,15 @@ int main()
 	if (!(mlx.win = mlx_new_window(mlx.ptr, SCREENW, SCREENH, "cub3d")))
 		return (EXIT_FAILURE);
 	mlx.img = mlx_new_image(mlx.ptr, SCREENW, SCREENH);
-	mlx.texture = mlx_xpm_file_to_image(mlx.ptr, "textures/cat2.xpm", &mlx.text_h, &mlx.text_w);
+	text.texture1 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat1.xpm", &(text.text1_h), &(text.text1_w));
+	text.texture2 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat2.xpm", &(text.text2_h), &(text.text2_w));
+	text.texture3 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat3.xpm", &(text.text3_h), &(text.text3_w));
+	text.texture4 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat4.xpm", &(text.text4_h), &(text.text4_w));
+	text.texture1_data = (int *)mlx_get_data_addr(text.texture1, &text.text1_sizebit, &text.text1_sizeline, &text.text1_endian);
+	text.texture2_data = (int *)mlx_get_data_addr(text.texture2, &text.text2_sizebit, &text.text2_sizeline, &text.text2_endian);
+	text.texture3_data = (int *)mlx_get_data_addr(text.texture3, &text.text3_sizebit, &text.text3_sizeline, &text.text3_endian);
+	text.texture4_data = (int *)mlx_get_data_addr(text.texture4, &text.text4_sizebit, &text.text4_sizeline, &text.text4_endian);
 	mlx.data_addr = (int *)mlx_get_data_addr(mlx.img, &(mlx.bits), &(mlx.size_line), &(mlx.endian));
-	mlx.texture_data = (int *)mlx_get_data_addr(mlx.texture, &mlx.text_sizebit, &mlx.text_sizeline, &mlx.text_endian);
 	mlx_hook(mlx.win, 2, 1, movement, (void *)&params);
 	mlx_loop_hook ( mlx.ptr, run_game, (void *)&params);
 	mlx_loop(mlx.ptr);
