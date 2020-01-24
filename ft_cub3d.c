@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/22 11:22:29 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/24 16:18:33 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ typedef struct		mlx_s
 	texture_t		*texture;
 	int				*texture_data;
 	int				text_sizeline;
+	int				text_w;
+	int				text_x;
 
 }					mlx_t;
 
@@ -148,7 +150,7 @@ int	rgb_int(int red, int green, int blue)
 	return (rgb);
 }
 
-int drawline(mlx_t *mlx, int x)
+int drawline(mlx_t *mlx, int x, int text_x)
 {
 	int i;
 	int j;
@@ -163,14 +165,13 @@ int drawline(mlx_t *mlx, int x)
 	text = mlx->texture_data;
 	while (i < mlx->l_start)
 	{
-		*(draw + x + i * mlx->size_line / 4) = rgb_int(50, 0, 0);
+		*(draw + x + i * mlx->size_line / 4) = rgb_int(135, 197, 214);
 		i++;
 	}
 
 	while (i < end)
 	{
-		*(draw + x + i * mlx->size_line / 4) = *(text + x + j * mlx->text_sizeline / 4);
-		// *(draw + x + i * mlx->size_line / 4) = mlx->color;
+		*(draw + x + i * mlx->size_line / 4) = *(text + text_x + j * mlx->text_sizeline / 4 / (mlx->l_end - mlx->l_start));
 		i++;
 		j++;
 	}
@@ -222,6 +223,8 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 	int x;
 	int hit;
 	int side;
+	int walldir;
+	double wallx;
 
 	x = 0;
 	while(x < SCREENW)
@@ -237,8 +240,6 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		ray->delta_y = fabs(1 / ray->dir_y);
 
 		get_step(map, ray, pl);
-
-		char walldir;
 
 		walldir = 0;
 		while(hit == 0)
@@ -267,6 +268,8 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 				walldir = 'W';
 			else
 				walldir = 'E';
+			ray->walldist = (map->y - pl->pos_y + (1 - map->step_y) / 2) / ray->dir_y;
+			wallx = pl->pos_x + ray->walldist * ray->dir_x;
 		}
 		else
 		{
@@ -274,12 +277,9 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 				walldir = 'N';
 			else
 				walldir = 'S';
-		}
-
-		if (!side)
 			ray->walldist = (map->x - pl->pos_x + (1 - map->step_x) / 2) / ray->dir_x;
-		else
-			ray->walldist = (map->y - pl->pos_y + (1 - map->step_y) / 2) / ray->dir_y;
+			wallx = pl->pos_y + ray->walldist * ray->dir_y;
+		}
 
 		mlx->l_height = (int)(SCREENH / ray->walldist);
 		mlx->l_start = (mlx->l_height * -1) / 2 + SCREENH / 2;
@@ -293,24 +293,38 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		{
 			mlx->texture_data = mlx->texture->texture1_data;
 			mlx->text_sizeline = mlx->texture->text1_sizeline;
+			mlx->text_w = mlx->texture->text1_w;
 		}
 		else if (walldir == 'W')
 		{
 			mlx->texture_data = mlx->texture->texture2_data;
 			mlx->text_sizeline = mlx->texture->text2_sizeline;
+			mlx->text_w = mlx->texture->text2_w;
 		}
 				else if (walldir == 'E')
 		{
 			mlx->texture_data = mlx->texture->texture3_data;
 			mlx->text_sizeline = mlx->texture->text3_sizeline;
+			mlx->text_w = mlx->texture->text3_w;
 		}
 		else
 		{
 			mlx->texture_data = mlx->texture->texture4_data;
 			mlx->text_sizeline = mlx->texture->text4_sizeline;
+			mlx->text_w = mlx->texture->text4_w;
 		}
 
-		drawline(mlx, x);
+		wallx -= floor(wallx);
+		mlx->text_x = wallx * (mlx->text_sizeline / 4);
+		mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x - 1;
+		if (side == 0 && ray->dir_x > 0)
+			mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
+		else if (side == 1 && ray->dir_y < 0)
+			mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
+		// wallx -= floor(wallx);
+		// mlx->text_x = wallx * mlx->text_sizeline / 4;
+
+		drawline(mlx, x, mlx->text_x);
 		x++;
 	}
 }
