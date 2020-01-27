@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/27 13:53:09 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/27 14:13:17 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,6 @@ int drawline(mlx_t *mlx, int x, int text_x)
 		*(mlx->data_addr + x + i * mlx->size_line / 4) = *(text + text_x + (int)pos * mlx->text_sizeline / 4);
 		i++;
 		pos += step;
-		j += step;
 	}
 
 	while (i < SCREENH)
