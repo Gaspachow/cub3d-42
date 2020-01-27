@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/24 16:18:33 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/27 13:53:09 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct		mlx_s
 	texture_t		*texture;
 	int				*texture_data;
 	int				text_sizeline;
-	int				text_w;
+	int				text_h;
 	int				text_x;
 
 }					mlx_t;
@@ -154,31 +154,31 @@ int drawline(mlx_t *mlx, int x, int text_x)
 {
 	int i;
 	int j;
-	int end;
-	int *draw;
 	int *text;
+	double step;
 
 	i = 0;
 	j = 0;
-	end = mlx->l_end;
-	draw = mlx->data_addr;
+	step = 1.0 * mlx->text_h / mlx->l_height;
+	double pos = (mlx->l_start - SCREENH / 2 + mlx->l_height / 2) * step;
 	text = mlx->texture_data;
 	while (i < mlx->l_start)
 	{
-		*(draw + x + i * mlx->size_line / 4) = rgb_int(135, 197, 214);
+		*(mlx->data_addr + x + i * mlx->size_line / 4) = rgb_int(135, 197, 214);
 		i++;
 	}
 
-	while (i < end)
+	while (i < mlx->l_end)
 	{
-		*(draw + x + i * mlx->size_line / 4) = *(text + text_x + j * mlx->text_sizeline / 4 / (mlx->l_end - mlx->l_start));
+		*(mlx->data_addr + x + i * mlx->size_line / 4) = *(text + text_x + (int)pos * mlx->text_sizeline / 4);
 		i++;
-		j++;
+		pos += step;
+		j += step;
 	}
 
 	while (i < SCREENH)
 	{
-		*(draw + x + i * mlx->size_line / 4) = rgb_int(125, 125, 125);
+		*(mlx->data_addr + x + i * mlx->size_line / 4) = rgb_int(125, 125, 125);
 		i++;
 	}
 	return (1);
@@ -293,34 +293,34 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 		{
 			mlx->texture_data = mlx->texture->texture1_data;
 			mlx->text_sizeline = mlx->texture->text1_sizeline;
-			mlx->text_w = mlx->texture->text1_w;
+			mlx->text_h = mlx->texture->text1_h;
 		}
 		else if (walldir == 'W')
 		{
 			mlx->texture_data = mlx->texture->texture2_data;
 			mlx->text_sizeline = mlx->texture->text2_sizeline;
-			mlx->text_w = mlx->texture->text2_w;
+			mlx->text_h = mlx->texture->text2_h;
 		}
 				else if (walldir == 'E')
 		{
 			mlx->texture_data = mlx->texture->texture3_data;
 			mlx->text_sizeline = mlx->texture->text3_sizeline;
-			mlx->text_w = mlx->texture->text3_w;
+			mlx->text_h = mlx->texture->text3_h;
 		}
 		else
 		{
 			mlx->texture_data = mlx->texture->texture4_data;
 			mlx->text_sizeline = mlx->texture->text4_sizeline;
-			mlx->text_w = mlx->texture->text4_w;
+			mlx->text_h = mlx->texture->text4_h;
 		}
 
 		wallx -= floor(wallx);
 		mlx->text_x = wallx * (mlx->text_sizeline / 4);
-		mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x - 1;
-		if (side == 0 && ray->dir_x > 0)
-			mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
-		else if (side == 1 && ray->dir_y < 0)
-			mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
+		// mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x - 1;
+		// if (side == 0 && ray->dir_x > 0)
+		// 	mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
+		// else if (side == 1 && ray->dir_y < 0)
+		// 	mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
 		// wallx -= floor(wallx);
 		// mlx->text_x = wallx * mlx->text_sizeline / 4;
 
@@ -421,10 +421,10 @@ int main()
 	if (!(mlx.win = mlx_new_window(mlx.ptr, SCREENW, SCREENH, "cub3d")))
 		return (EXIT_FAILURE);
 	mlx.img = mlx_new_image(mlx.ptr, SCREENW, SCREENH);
-	text.texture1 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat1.xpm", &(text.text1_h), &(text.text1_w));
-	text.texture2 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat2.xpm", &(text.text2_h), &(text.text2_w));
-	text.texture3 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat3.xpm", &(text.text3_h), &(text.text3_w));
-	text.texture4 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat4.xpm", &(text.text4_h), &(text.text4_w));
+	text.texture1 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat1.xpm", &(text.text1_w), &(text.text1_h));
+	text.texture2 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat2.xpm", &(text.text2_w), &(text.text2_h));
+	text.texture3 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat3.xpm", &(text.text3_w), &(text.text3_h));
+	text.texture4 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat4.xpm", &(text.text4_w), &(text.text4_h));
 	text.texture1_data = (int *)mlx_get_data_addr(text.texture1, &text.text1_sizebit, &text.text1_sizeline, &text.text1_endian);
 	text.texture2_data = (int *)mlx_get_data_addr(text.texture2, &text.text2_sizebit, &text.text2_sizeline, &text.text2_endian);
 	text.texture3_data = (int *)mlx_get_data_addr(text.texture3, &text.text3_sizebit, &text.text3_sizeline, &text.text3_endian);
@@ -434,5 +434,3 @@ int main()
 	mlx_loop_hook ( mlx.ptr, run_game, (void *)&params);
 	mlx_loop(mlx.ptr);
 }
-
-
