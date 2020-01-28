@@ -9,7 +9,7 @@ GCC		= gcc
 
 FLAGS	= -Wall -Wextra -Werror
 
-INCLUDEH	= -I /usr/X11/include -g -L /usr/X11/lib -l mlx -framework OpenGL -framework AppKit
+INCLUDEH	= -I /usr/X11/include -g -l mlx -framework OpenGL -framework AppKit
 
 
 
@@ -29,7 +29,7 @@ fclean: clean
 re: fclean all
 
 %.o: %.c
-	$(GCC) $(INCLUDEH) -c $<  -o $(<:.c=.o)
+	$(GCC) -c $<  -o $(<:.c=.o)
 
 run: all
 	./cub3d.out
