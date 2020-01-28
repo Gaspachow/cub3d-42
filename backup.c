@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 17:49:14 by gas               #+#    #+#             */
-/*   Updated: 2020/01/20 15:14:39 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/28 13:37:59 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include <unistd.h>
 #include <mlx.h>
 
-typedef struct		data_s
+typedef struct		s_data
 {
 	void			*mlx_ptr;
 	void			*mlx_win;
-}					data_t;
+}					t_data;
 
-typedef struct		img_s
+typedef struct		s_img
 {
 	int				x;
 	int				y;
@@ -31,7 +31,7 @@ typedef struct		img_s
 	void			*ptr;
 	void			*win;
 	void			*mlx;
-}					img_t;
+}					t_img;
 
 int	rgb_int(int red, int green, int blue)
 {
@@ -49,7 +49,7 @@ int	test(int i)
 	return (1);
 }
 
-int	deal_key(int key, img_t *datapepe)
+int	deal_key(int key, t_img *datapepe)
 {
 	test(key);
 	if (key == 13)
@@ -81,9 +81,9 @@ int	deal_key(int key, img_t *datapepe)
 
 int	main(void)
 {
-	data_t	data;
+	t_data	data;
 	int		i;
-	img_t	datapepe;
+	t_img	datapepe;
 
 	datapepe.x = 900;
 	datapepe.y = 500;

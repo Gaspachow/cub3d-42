@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/27 14:13:17 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/28 13:37:07 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,60 +21,60 @@
 #define SCREENW 640
 #define SCREENH 480
 
-typedef	struct		textures_s
+typedef	struct		s_txt
 {
-	void			*texture1;
-	int				*texture1_data;
+	void			*txt1;
+	int				*txt1_data;
 	int				text1_h;
 	int				text1_w;
-	int				text1_sizeline;
-	int				text1_sizebit;
-	int				text1_endian;
-	void			*texture2;
-	int				*texture2_data;
+	int				text1_sl;
+	int				text1_sb;
+	int				text1_ed;
+	void			*txt2;
+	int				*txt2_data;
 	int				text2_h;
 	int				text2_w;
-	int				text2_sizeline;
-	int				text2_sizebit;
-	int				text2_endian;
-	void			*texture3;
-	int				*texture3_data;
+	int				text2_sl;
+	int				text2_sb;
+	int				text2_ed;
+	void			*txt3;
+	int				*txt3_data;
 	int				text3_h;
 	int				text3_w;
-	int				text3_sizeline;
-	int				text3_sizebit;
-	int				text3_endian;
-	void			*texture4;
-	int				*texture4_data;
+	int				text3_sl;
+	int				text3_sb;
+	int				text3_ed;
+	void			*txt4;
+	int				*txt4_data;
 	int				text4_h;
 	int				text4_w;
-	int				text4_sizeline;
-	int				text4_sizebit;
-	int				text4_endian;
-}					texture_t;
+	int				text4_sl;
+	int				text4_sb;
+	int				text4_ed;
+}					t_txt;
 
-typedef struct		mlx_s
+typedef struct		s_mlx
 {
 	void			*ptr;
 	void			*win;
 	void			*img;
-	int				*data_addr;
+	int				*d_ad;
 	int				bits;
-	int				size_line;
-	int				endian;
+	int				sl;
+	int				ed;
 	int				l_height;
 	int				l_start;
 	int				l_end;
 	int				color;
-	texture_t		*texture;
-	int				*texture_data;
-	int				text_sizeline;
+	t_txt			*txt;
+	int				*txt_data;
+	int				text_sl;
 	int				text_h;
 	int				text_x;
 
-}					mlx_t;
+}					t_mlx;
 
-typedef struct		player_s
+typedef struct		s_player
 {
 	double			pos_x;
 	double			pos_y;
@@ -83,9 +83,9 @@ typedef struct		player_s
 	double			plane_x;
 	double			plane_y;
 	double			camera_x;
-}					player_t;
+}					t_player;
 
-typedef struct		world_s
+typedef struct		s_world
 {
 	double			time;
 	double			oldtime;
@@ -93,9 +93,9 @@ typedef struct		world_s
 	int				y;
 	int				step_x;
 	int				step_y;
-}					world_t;
+}					t_world;
 
-typedef struct		ray_s
+typedef struct		s_ray
 {
 	double			dir_x;
 	double			dir_y;
@@ -104,15 +104,15 @@ typedef struct		ray_s
 	double			delta_x;
 	double			delta_y;
 	double			walldist;
-}					ray_t;
+}					t_ray;
 
-typedef struct		param_s
+typedef struct		s_param
 {
-	mlx_t			*mlx;
-	player_t		*pl;
-	world_t			*map;
-	ray_t			*ray;
-}					param_t;
+	t_mlx			*mlx;
+	t_player		*pl;
+	t_world			*map;
+	t_ray			*ray;
+}					t_param;
 
 int worldmap[MAPW][MAPH] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -150,40 +150,38 @@ int	rgb_int(int red, int green, int blue)
 	return (rgb);
 }
 
-int drawline(mlx_t *mlx, int x, int text_x)
+int drawline(t_mlx *mlx, int x, int text_x)
 {
 	int i;
-	int j;
 	int *text;
 	double step;
 
 	i = 0;
-	j = 0;
 	step = 1.0 * mlx->text_h / mlx->l_height;
 	double pos = (mlx->l_start - SCREENH / 2 + mlx->l_height / 2) * step;
-	text = mlx->texture_data;
+	text = mlx->txt_data;
 	while (i < mlx->l_start)
 	{
-		*(mlx->data_addr + x + i * mlx->size_line / 4) = rgb_int(135, 197, 214);
+		*(mlx->d_ad + x + i * mlx->sl / 4) = rgb_int(135, 197, 214);
 		i++;
 	}
 
 	while (i < mlx->l_end)
 	{
-		*(mlx->data_addr + x + i * mlx->size_line / 4) = *(text + text_x + (int)pos * mlx->text_sizeline / 4);
+		*(mlx->d_ad + x + i * mlx->sl / 4) = *(text + text_x + (int)pos * mlx->text_sl / 4);
 		i++;
 		pos += step;
 	}
 
 	while (i < SCREENH)
 	{
-		*(mlx->data_addr + x + i * mlx->size_line / 4) = rgb_int(125, 125, 125);
+		*(mlx->d_ad + x + i * mlx->sl / 4) = rgb_int(125, 125, 125);
 		i++;
 	}
 	return (1);
 }
 
-void	player_init(player_t *pl)
+void	player_init(t_player *pl)
 {
 	pl->pos_x = 22;
 	pl->pos_y = 10;
@@ -193,7 +191,7 @@ void	player_init(player_t *pl)
 	pl->plane_y = 0.66;
 }
 
-void	get_step(world_t *map, ray_t *ray, player_t *pl)
+void	get_step(t_world *map, t_ray *ray, t_player *pl)
 {
 	if (ray->dir_x < 0)
 	{
@@ -217,7 +215,7 @@ void	get_step(world_t *map, ray_t *ray, player_t *pl)
 	}
 }
 
-void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
+void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 {
 	int x;
 	int hit;
@@ -290,45 +288,45 @@ void	raycast(player_t *pl, mlx_t *mlx, world_t *map, ray_t *ray)
 
 		if (walldir == 'N')
 		{
-			mlx->texture_data = mlx->texture->texture1_data;
-			mlx->text_sizeline = mlx->texture->text1_sizeline;
-			mlx->text_h = mlx->texture->text1_h;
+			mlx->txt_data = mlx->txt->txt1_data;
+			mlx->text_sl = mlx->txt->text1_sl;
+			mlx->text_h = mlx->txt->text1_h;
 		}
 		else if (walldir == 'W')
 		{
-			mlx->texture_data = mlx->texture->texture2_data;
-			mlx->text_sizeline = mlx->texture->text2_sizeline;
-			mlx->text_h = mlx->texture->text2_h;
+			mlx->txt_data = mlx->txt->txt2_data;
+			mlx->text_sl = mlx->txt->text2_sl;
+			mlx->text_h = mlx->txt->text2_h;
 		}
 				else if (walldir == 'E')
 		{
-			mlx->texture_data = mlx->texture->texture3_data;
-			mlx->text_sizeline = mlx->texture->text3_sizeline;
-			mlx->text_h = mlx->texture->text3_h;
+			mlx->txt_data = mlx->txt->txt3_data;
+			mlx->text_sl = mlx->txt->text3_sl;
+			mlx->text_h = mlx->txt->text3_h;
 		}
 		else
 		{
-			mlx->texture_data = mlx->texture->texture4_data;
-			mlx->text_sizeline = mlx->texture->text4_sizeline;
-			mlx->text_h = mlx->texture->text4_h;
+			mlx->txt_data = mlx->txt->txt4_data;
+			mlx->text_sl = mlx->txt->text4_sl;
+			mlx->text_h = mlx->txt->text4_h;
 		}
 
 		wallx -= floor(wallx);
-		mlx->text_x = wallx * (mlx->text_sizeline / 4);
-		// mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x - 1;
+		mlx->text_x = wallx * (mlx->text_sl / 4);
+		// mlx->text_x = (mlx->text_sl / 4) - mlx->text_x - 1;
 		// if (side == 0 && ray->dir_x > 0)
-		// 	mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
+		// 	mlx->text_x = (mlx->text_sl / 4) - mlx->text_x -1;
 		// else if (side == 1 && ray->dir_y < 0)
-		// 	mlx->text_x = (mlx->text_sizeline / 4) - mlx->text_x -1;
+		// 	mlx->text_x = (mlx->text_sl / 4) - mlx->text_x -1;
 		// wallx -= floor(wallx);
-		// mlx->text_x = wallx * mlx->text_sizeline / 4;
+		// mlx->text_x = wallx * mlx->text_sl / 4;
 
 		drawline(mlx, x, mlx->text_x);
 		x++;
 	}
 }
 
-void	rotation(int key, player_t *pl)
+void	rotation(int key, t_player *pl)
 {
 	double	old_dir;
 	double	old_plane;
@@ -337,14 +335,14 @@ void	rotation(int key, player_t *pl)
 	old_dir = pl->dir_x;
 	old_plane = pl->plane_x;
 	speed = 0.08;
-	if (key == 124)
+	if (key == 124) // RIGHT ROT
 	{
 		pl->dir_x = (pl->dir_x * cos(-speed) - pl->dir_y * sin(-speed));
 		pl->dir_y = (old_dir * sin(-speed) + pl->dir_y * cos(-speed));
 		pl->plane_x = (pl->plane_x * cos(-speed) - pl->plane_y * sin(-speed));
 		pl->plane_y = (old_plane * sin(-speed) + pl->plane_y * cos(speed));
 	}
-	if (key == 123)
+	if (key == 123) // LEFT ROT
 	{
 		pl->dir_x = (pl->dir_x * cos(speed) - pl->dir_y * sin(speed));
 		pl->dir_y = (old_dir * sin(speed) + pl->dir_y * cos(speed));
@@ -353,83 +351,110 @@ void	rotation(int key, player_t *pl)
 	}
 }
 
-int		movement(int key, param_t *params)
+void	mov_updown(int key, t_player *pl, t_world *map, float speed)
 {
-	double speed;
+	if (key == 13) // UP
+	{
+		pl->pos_x += pl->dir_x * speed;
+		pl->pos_y += pl->dir_y * speed;
+	}
+	if (key == 1) // DOWN
+	{
+		pl->pos_x -= pl->dir_x * speed;
+		pl->pos_y -= pl->dir_y * speed;
+	}
+}
+
+void	mov_leftright(int key, t_player *pl, t_world *map, float speed)
+{
+	if (key == 0) // LEFT
+	{
+		pl->pos_y += pl->dir_x * speed;
+		pl->pos_x -= pl->dir_y * speed;
+	}
+	if (key == 2) // RIGHT
+	{
+		pl->pos_y -= pl->dir_x * speed;
+		pl->pos_x += pl->dir_y * speed;
+	}
+}
+
+
+int		key_input(int key, t_param *params)
+{
+	float speed;
 
 	speed = 0.3;
-	if (key == 13)
-	{
-		params->pl->pos_x += params->pl->dir_x * speed;
-		params->pl->pos_y += params->pl->dir_y * speed;
-	}
-	if (key == 1)
-	{
-		params->pl->pos_x -= params->pl->dir_x * speed;
-		params->pl->pos_y -= params->pl->dir_y * speed;
-	}
-	if (key == 0)
-	{
-		params->pl->pos_y += params->pl->dir_x * speed;
-		params->pl->pos_x -= params->pl->dir_y * speed;
-	}
-	if (key == 2)
-	{
-		params->pl->pos_y -= params->pl->dir_x * speed;
-		params->pl->pos_x += params->pl->dir_y * speed;
-	}
-	if (key == 123 || key == 124)
+	if (key == 1 || key == 13)
+		mov_updown(key, params->pl, params->map, speed);
+	else if (key == 0 || key == 2)
+		mov_leftright(key, params->pl, params->map, speed);
+	else if (key == 123 || key == 124)
 		rotation(key, params->pl);
 	return (0);
 }
 
-int	run_game(param_t *params)
+int		run_game(t_param *params)
 {
-	mlx_t		*mlx;
-	player_t	*pl;
-	world_t		*map;
-	ray_t		*ray;
+	t_mlx		*mlx;
+	t_player	*pl;
+	t_world		*map;
+	t_ray		*ray;
 
 	mlx = params->mlx;
 	pl = params->pl;
 	map = params->map;
 	ray = params->ray;
 	raycast(pl, mlx, map, ray);
-	mlx_put_image_to_window(params->mlx->ptr, params->mlx->win, params->mlx->img, 0, 0);
+	mlx_put_image_to_window(mlx->ptr, mlx->win, mlx->img, 0, 0);
 	return (0);
 }
 
-int main()
+
+void	txt_init(t_txt *text, t_mlx *mlx)
 {
-	mlx_t		mlx;
-	player_t	one;
-	world_t		map;
-	ray_t		ray;
-	param_t		params;
-	texture_t	text;
+	text->txt1 = mlx_xpm_file_to_image(mlx->ptr,
+	"textures/cat1.xpm", &(text->text1_w), &(text->text1_h));
+	text->txt2 = mlx_xpm_file_to_image(mlx->ptr,
+	"textures/cat2.xpm", &(text->text2_w), &(text->text2_h));
+	text->txt3 = mlx_xpm_file_to_image(mlx->ptr,
+	"textures/cat3.xpm", &(text->text3_w), &(text->text3_h));
+	text->txt4 = mlx_xpm_file_to_image(mlx->ptr,
+	"textures/cat4.xpm", &(text->text4_w), &(text->text4_h));
+	text->txt1_data = (int *)mlx_get_data_addr(text->txt1,
+	&text->text1_sb, &text->text1_sl, &text->text1_ed);
+	text->txt2_data = (int *)mlx_get_data_addr(text->txt2,
+	&text->text2_sb, &text->text2_sl, &text->text2_ed);
+	text->txt3_data = (int *)mlx_get_data_addr(text->txt3,
+	&text->text3_sb, &text->text3_sl, &text->text3_ed);
+	text->txt4_data = (int *)mlx_get_data_addr(text->txt4,
+	&text->text4_sb, &text->text4_sl, &text->text4_ed);
+}
+
+
+int		main()
+{
+	t_mlx		mlx;
+	t_player	one;
+	t_world		map;
+	t_ray		ray;
+	t_param		params;
+	t_txt	text;
 
 	params.mlx = &mlx;
 	params.pl = &one;
 	params.map = &map;
 	params.ray = &ray;
-	mlx.texture = &text;
-
+	mlx.txt = &text;
 	player_init(&one);
 	if (!(mlx.ptr = mlx_init()))
 		return (EXIT_FAILURE);
 	if (!(mlx.win = mlx_new_window(mlx.ptr, SCREENW, SCREENH, "cub3d")))
 		return (EXIT_FAILURE);
 	mlx.img = mlx_new_image(mlx.ptr, SCREENW, SCREENH);
-	text.texture1 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat1.xpm", &(text.text1_w), &(text.text1_h));
-	text.texture2 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat2.xpm", &(text.text2_w), &(text.text2_h));
-	text.texture3 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat3.xpm", &(text.text3_w), &(text.text3_h));
-	text.texture4 = mlx_xpm_file_to_image(mlx.ptr, "textures/cat4.xpm", &(text.text4_w), &(text.text4_h));
-	text.texture1_data = (int *)mlx_get_data_addr(text.texture1, &text.text1_sizebit, &text.text1_sizeline, &text.text1_endian);
-	text.texture2_data = (int *)mlx_get_data_addr(text.texture2, &text.text2_sizebit, &text.text2_sizeline, &text.text2_endian);
-	text.texture3_data = (int *)mlx_get_data_addr(text.texture3, &text.text3_sizebit, &text.text3_sizeline, &text.text3_endian);
-	text.texture4_data = (int *)mlx_get_data_addr(text.texture4, &text.text4_sizebit, &text.text4_sizeline, &text.text4_endian);
-	mlx.data_addr = (int *)mlx_get_data_addr(mlx.img, &(mlx.bits), &(mlx.size_line), &(mlx.endian));
-	mlx_hook(mlx.win, 2, 1, movement, (void *)&params);
+	txt_init(&text, &mlx);
+	mlx.d_ad = (int *)mlx_get_data_addr(mlx.img, &(mlx.bits), &(mlx.sl), &(mlx.ed));
+	mlx_hook(mlx.win, 2, 1, key_input, (void *)&params);
 	mlx_loop_hook ( mlx.ptr, run_game, (void *)&params);
 	mlx_loop(mlx.ptr);
 }
