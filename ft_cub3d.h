@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/28 15:27:15 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/29 11:51:21 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ typedef struct		s_ray
 	double			delta_x;
 	double			delta_y;
 	double			walldist;
+	char			walldir;
+	double			wallx;
+	int				wallside;
 }					t_ray;
 
 typedef struct		s_param
