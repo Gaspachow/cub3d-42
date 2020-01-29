@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:06:04 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/28 15:16:46 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/29 12:55:25 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,43 @@ int	drawline(t_mlx *mlx, int x, int text_x)
 		*(mlx->d_ad + x + i++ * mlx->sl / 4) = rgb_int(125, 125, 125);
 	}
 	return (1);
+}
+
+void	define_line(t_mlx *mlx, t_ray *ray)
+{
+	mlx->l_height = (int)(SCREENH / ray->walldist);
+	mlx->l_start = (mlx->l_height * -1) / 2 + SCREENH / 2;
+	if (mlx->l_start < 0)
+		mlx->l_start = 0;
+	mlx->l_end = mlx->l_height / 2 + SCREENH / 2;
+	if (mlx->l_end >= SCREENH)
+		mlx->l_end = SCREENH - 1;
+}
+
+void	choose_texture(t_mlx *mlx, t_ray *ray)
+{
+	if (ray->walldir == 'N')
+	{
+		mlx->txt_data = mlx->txt->txt1_data;
+		mlx->text_sl = mlx->txt->text1_sl;
+		mlx->text_h = mlx->txt->text1_h;
+	}
+	else if (ray->walldir == 'S')
+	{
+		mlx->txt_data = mlx->txt->txt2_data;
+		mlx->text_sl = mlx->txt->text2_sl;
+		mlx->text_h = mlx->txt->text2_h;
+	}
+	else if (ray->walldir == 'E')
+	{
+		mlx->txt_data = mlx->txt->txt3_data;
+		mlx->text_sl = mlx->txt->text3_sl;
+		mlx->text_h = mlx->txt->text3_h;
+	}
+	else
+	{
+		mlx->txt_data = mlx->txt->txt4_data;
+		mlx->text_sl = mlx->txt->text4_sl;
+		mlx->text_h = mlx->txt->text4_h;
+	}
 }
