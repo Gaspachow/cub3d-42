@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:30:16 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/30 14:50:47 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/30 15:53:28 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,35 @@ void	mov_updown(t_player *pl, t_world *map, float speed)
 {
 	if (pl->forward)// UP
 	{
-		if (!(map->worldmap[(int)(pl->pos_x + pl->dir_x * speed)][(int)(pl->pos_y + pl->dir_y * speed)]))
-		pl->pos_x += pl->dir_x * speed;
-		pl->pos_y += pl->dir_y * speed;
+		if (!(map->worldmap[(int)(pl->pos_x + pl->dir_x * speed)][(int)(pl->pos_y)]))
+			pl->pos_x += pl->dir_x * speed;
+		if (!(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y + pl->dir_y * speed)]))
+			pl->pos_y += pl->dir_y * speed;
 	}
-	if (pl->backward && (!(map->worldmap[(int)(pl->pos_x - pl->dir_x * speed)][(int)(pl->pos_y + pl->dir_y * speed)]))) // DOWN
+	if (pl->backward) // DOWN
 	{
-		pl->pos_x -= pl->dir_x * speed;
+		if (!(map->worldmap[(int)(pl->pos_x - pl->dir_x * speed)][(int)(pl->pos_y)]))
+			pl->pos_x -= pl->dir_x * speed;
+		if (!(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y - pl->dir_y * speed)]))
 		pl->pos_y -= pl->dir_y * speed;
 	}
 }
 
 void	mov_leftright(t_player *pl, t_world *map, float speed)
 {
-	if (pl->left && (!(map->worldmap[(int)(pl->pos_x - pl->dir_y * speed)][(int)(pl->pos_y + pl->dir_x * speed)]))) // LEFT
+	if (pl->left) // LEFT
 	{
-		pl->pos_y += pl->dir_x * speed;
-		pl->pos_x -= pl->dir_y * speed;
+		if (!(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y + pl->dir_x * speed)]))
+			pl->pos_y += pl->dir_x * speed;
+		if (!(map->worldmap[(int)(pl->pos_x - pl->dir_y * speed)][(int)(pl->pos_y)]))
+			pl->pos_x -= pl->dir_y * speed;
 	}
-	if (pl->right && (!(map->worldmap[(int)(pl->pos_x + pl->dir_y * speed)][(int)(pl->pos_y - pl->dir_x * speed)]))) // RIGHT
+	if (pl->right) // RIGHT
 	{
-		pl->pos_y -= pl->dir_x * speed;
-		pl->pos_x += pl->dir_y * speed;
+		if (!(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y - pl->dir_x * speed)]))
+			pl->pos_y -= pl->dir_x * speed;
+		if (!(map->worldmap[(int)(pl->pos_x + pl->dir_y * speed)][(int)(pl->pos_y)]))
+			pl->pos_x += pl->dir_y * speed;
 	}
 }
 
