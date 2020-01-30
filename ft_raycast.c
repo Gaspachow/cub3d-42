@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:17:45 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/29 12:57:09 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/30 13:06:54 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int 	worldmap[MAPW][MAPH] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-void	fov_and_pos(int x, t_world *map, t_ray *ray, t_player *pl)
+void	fov_and_pos(t_mlx *mlx, t_world *map, t_ray *ray, t_player *pl)
 {
-	pl->camera_x = 2 * x / (double)SCREENW - 1;
+	pl->camera_x = 2 * mlx->x / (double)mlx->screen_w - 1;
 	ray->dir_x = pl->dir_x + pl->plane_x * pl->camera_x;
 	ray->dir_y = pl->dir_y + pl->plane_y * pl->camera_x;
 	map->x = (int)(pl->pos_x);
@@ -124,19 +124,14 @@ void	walldist_dir(t_world *map, t_player *pl, t_ray *ray)
 	}
 }
 
-void	define_line(t_mlx *mlx, t_ray *ray);
-
-void	choose_texture(t_mlx *mlx, t_ray *ray);
-
 void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 {
-	int x;
 	int side;
 
-	x = 0;
-	while (x < SCREENW)
+	mlx->x = 0;
+	while (mlx->x < mlx->screen_w)
 	{
-		fov_and_pos(x, map, ray, pl);
+		fov_and_pos(mlx, map, ray, pl);
 		get_step(map, ray, pl);
 		wallhit(map, ray);
 		walldist_dir(map, pl, ray);
@@ -144,7 +139,7 @@ void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 		choose_texture(mlx, ray);
 		ray->wallx -= floor(ray->wallx);
 		mlx->text_x = ray->wallx * (mlx->text_sl / 4);
-		drawline(mlx, x, mlx->text_x);
-		x++;
+		drawline(mlx, mlx->x, mlx->text_x);
+		mlx->x++;
 	}
 }

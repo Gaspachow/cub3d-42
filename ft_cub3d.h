@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/29 11:51:21 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/30 14:11:27 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # include <mlx.h>
 # define MAPW 24
 # define MAPH 24
-# define SCREENW 640
-# define SCREENH 480
 
 typedef	struct		s_txt
 {
@@ -71,7 +69,9 @@ typedef struct		s_mlx
 	int				text_sl;
 	int				text_h;
 	int				text_x;
-
+	int				screen_h;
+	int				screen_w;
+	int				x;
 }					t_mlx;
 
 typedef struct		s_player
@@ -83,6 +83,12 @@ typedef struct		s_player
 	double			plane_x;
 	double			plane_y;
 	double			camera_x;
+	char			forward;
+	char			backward;
+	char			left;
+	char			right;
+	char			leftrot;
+	char			rightrot;
 }					t_player;
 
 typedef struct		s_world
@@ -122,11 +128,17 @@ int		drawline(t_mlx *mlx, int x, int text_x);
 void	player_init(t_player *pl);
 void	get_step(t_world *map, t_ray *ray, t_player *pl);
 void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray);
-void	rotation(int key, t_player *pl);
-void	mov_updown(int key, t_player *pl, t_world *map, float speed);
-void	mov_leftright(int key, t_player *pl, t_world *map, float speed);
-int		key_input(int key, t_param *params);
+void	rotation(t_player *pl);
+void	mov_updown(t_player *pl, t_world *map, float speed);
+void	mov_leftright(t_player *pl, t_world *map, float speed);
+int		key_press(int key, t_param *params);
+int		key_release(int key, t_param *params);
 int		run_game(t_param *params);
 void	txt_init(t_txt *text, t_mlx *mlx);
+void	define_line(t_mlx *mlx, t_ray *ray);
+void	choose_texture(t_mlx *mlx, t_ray *ray);
+int		key_release(int key, t_param *p);
+int		move(t_param *params);
+int 	close_game(void *coucou);
 
 #endif

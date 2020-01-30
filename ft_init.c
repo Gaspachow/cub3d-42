@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/29 11:30:06 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/30 13:47:15 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,10 @@ void	player_init(t_player *pl)
 	pl->dir_y = 0;
 	pl->plane_x = 0;
 	pl->plane_y = 0.66;
+	pl->forward = 0;
+	pl->backward = 0;
+	pl->left = 0;
+	pl->right = 0;
+	pl->rightrot = 0;
+	pl->leftrot = 0;
 }
