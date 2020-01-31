@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/30 14:31:39 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/31 11:31:37 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct		s_world
 	int				y;
 	int				step_x;
 	int				step_y;
-	int				worldmap[MAPW][MAPH];
+	int				worldmap[24][24];
 }					t_world;
 
 typedef struct		s_ray

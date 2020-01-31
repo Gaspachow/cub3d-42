@@ -32,4 +32,4 @@ re: fclean all
 	$(GCC) -c $<  -o $(<:.c=.o)
 
 run: all
-	./cub3d.out
+	@./cub3d.out

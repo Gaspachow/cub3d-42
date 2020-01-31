@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:17:45 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/30 14:40:12 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/01/31 11:30:03 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	wallhit(t_world *map, t_ray *ray)
 			map->y += map->step_y;
 			ray->wallside = 1;
 		}
-		if (map->worldmap[map->x][map->y] > 0)
+		if (map->worldmap[map->x][map->y] == 1)
 		{
 			hit = 1;
 		}
