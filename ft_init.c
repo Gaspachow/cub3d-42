@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/30 14:27:06 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/03 13:04:48 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	"textures/cat3.xpm", &(text->text3_w), &(text->text3_h));
 	text->txt4 = mlx_xpm_file_to_image(mlx->ptr,
 	"textures/cat4.xpm", &(text->text4_w), &(text->text4_h));
+	text->txt5 = mlx_xpm_file_to_image(mlx->ptr,
+	"textures/texture1.xpm", &(text->text5_w), &(text->text5_h));
 	text->txt1_data = (int *)mlx_get_data_addr(text->txt1,
 	&text->text1_sb, &text->text1_sl, &text->text1_ed);
 	text->txt2_data = (int *)mlx_get_data_addr(text->txt2,
@@ -30,7 +32,11 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	&text->text3_sb, &text->text3_sl, &text->text3_ed);
 	text->txt4_data = (int *)mlx_get_data_addr(text->txt4,
 	&text->text4_sb, &text->text4_sl, &text->text4_ed);
+	text->txt5_data = (int *)mlx_get_data_addr(text->txt5,
+	&text->text5_sb, &text->text5_sl, &text->text5_ed);
+	mlx->sprite_hit = 0;
 }
+
 
 void	player_init(t_player *pl)
 {

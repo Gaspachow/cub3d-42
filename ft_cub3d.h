@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/01/31 11:31:37 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/03 13:31:40 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ typedef	struct		s_txt
 	int				text4_sl;
 	int				text4_sb;
 	int				text4_ed;
+	void			*txt5;
+	int				*txt5_data;
+	int				text5_h;
+	int				text5_w;
+	int				text5_sl;
+	int				text5_sb;
+	int				text5_ed;
 }					t_txt;
 
 typedef struct		s_mlx
@@ -72,6 +79,11 @@ typedef struct		s_mlx
 	int				screen_h;
 	int				screen_w;
 	int				x;
+	int				sprite_hit;
+	int				sprite_x;
+	int				spr_l;
+	int				spr_start;
+	int				spr_end;
 }					t_mlx;
 
 typedef struct		s_player
@@ -111,6 +123,7 @@ typedef struct		s_ray
 	double			delta_x;
 	double			delta_y;
 	double			walldist;
+	double			spritedist;
 	char			walldir;
 	double			wallx;
 	int				wallside;
@@ -141,5 +154,7 @@ void	choose_texture(t_mlx *mlx, t_ray *ray);
 int		key_release(int key, t_param *p);
 int		move(t_param *params);
 int 	close_game(void *coucou);
+void	define_sprite_line(t_mlx *mlx, t_ray *ray);
+void	drawsprite(t_mlx *mlx, int x);
 
 #endif
