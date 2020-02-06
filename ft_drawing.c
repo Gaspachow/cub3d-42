@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:06:04 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/03 13:38:49 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/06 14:24:38 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,6 @@ int		rgb_int(int red, int green, int blue)
 	rgb = (rgb << 8) + green;
 	rgb = (rgb << 8) + blue;
 	return (rgb);
-}
-
-void	drawsprite(t_mlx *mlx, int x)
-{
-	int		i;
-	double	pos;
-	double	step;
-	int		*text;
-
-	step = 1.0 * mlx->txt->text5_h / mlx->spr_l;
-	pos = (mlx->spr_start - mlx->screen_h / 2 + mlx->spr_l / 2) * step;
-	i = mlx->spr_start;
-	text = mlx->txt->txt5_data;
-	while (i < mlx->spr_end)
-	{
-		*(mlx->d_ad + x + i++ * mlx->sl / 4) = *(text + mlx->sprite_x +
-		(int)pos * mlx->txt->text5_sl / 4);
-		pos += step;
-	}
-	mlx->sprite_x++;
 }
 
 int		drawline(t_mlx *mlx, int x, int text_x)
@@ -77,17 +57,6 @@ void	define_line(t_mlx *mlx, t_ray *ray)
 	mlx->l_end = mlx->l_height / 2 + mlx->screen_h / 2;
 	if (mlx->l_end >= mlx->screen_h)
 		mlx->l_end = mlx->screen_h - 1;
-}
-
-void	define_sprite_line(t_mlx *mlx, t_ray *ray)
-{
-	mlx->spr_l = (int)(mlx->screen_h / ray->spritedist);
-	mlx->spr_start = (mlx->spr_l * -1) / 2 + mlx->screen_h / 2;
-	if (mlx->spr_start < 0)
-		mlx->spr_start = 0;
-	mlx->spr_end = mlx->spr_l / 2 + mlx->screen_h / 2;
-	if (mlx->spr_end >= mlx->screen_h)
-		mlx->spr_end = mlx->screen_h - 1;
 }
 
 void	choose_texture(t_mlx *mlx, t_ray *ray)

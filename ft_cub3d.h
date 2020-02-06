@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/03 13:31:40 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/06 15:01:36 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,10 @@ typedef struct		s_mlx
 	int				x;
 	int				sprite_hit;
 	int				sprite_x;
-	int				spr_l;
+	int				spr_h;
 	int				spr_start;
 	int				spr_end;
+	float			Zbuffer[5000];
 }					t_mlx;
 
 typedef struct		s_player
@@ -155,6 +156,6 @@ int		key_release(int key, t_param *p);
 int		move(t_param *params);
 int 	close_game(void *coucou);
 void	define_sprite_line(t_mlx *mlx, t_ray *ray);
-void	drawsprite(t_mlx *mlx, int x);
+void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
 
 #endif

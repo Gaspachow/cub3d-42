@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:17:45 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/03 14:01:34 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/06 15:02:03 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ void	get_step(t_world *map, t_ray *ray, t_player *pl)
 	}
 }
 
-void	sprite_hit(t_world *map, t_ray *ray, t_mlx *mlx, t_player *pl)
-{
-	mlx->sprite_hit = 1;
-	ray->spritedist = (pl->pos_x - map->x) * (pl->pos_x - map->x) + (pl->pos_y - map->y) * (pl->pos_y - map->y);
-	// ray->spritedist = (map->y - pl->pos_y +
-	// 	(1 - map->step_y) / 2) / ray->dir_y;
-	// ray->spritedist = (map->x - pl->pos_x +
-	// 	(1 - map->step_x) / 2) / ray->dir_x;
-	// int i;
-}
-
 void	wallhit(t_world *map, t_ray *ray, t_mlx *mlx, t_player *pl)
 {
 	int hit;
@@ -79,8 +68,6 @@ void	wallhit(t_world *map, t_ray *ray, t_mlx *mlx, t_player *pl)
 		}
 		if (map->worldmap[map->x][map->y] == 1)
 			hit = 1;
-		else if (map->worldmap[map->x][map->y] == 2)
-			sprite_hit(map, ray, mlx, pl);
 	}
 }
 
@@ -124,13 +111,7 @@ void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 		ray->wallx -= floor(ray->wallx);
 		mlx->text_x = ray->wallx * (mlx->text_sl / 4);
 		drawline(mlx, mlx->x, mlx->text_x);
-		if (mlx->sprite_hit == 1)
-		{
-			define_sprite_line(mlx, ray);
-			drawsprite(mlx, mlx->x);
-			mlx->sprite_hit = 0;
-		}
+		drawsprites(mlx, pl, map, ray);
 		mlx->x++;
 	}
-	mlx->sprite_x = 0;
 }
