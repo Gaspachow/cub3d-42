@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:17:45 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/06 15:02:03 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/07 14:54:42 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 		ray->wallx -= floor(ray->wallx);
 		mlx->text_x = ray->wallx * (mlx->text_sl / 4);
 		drawline(mlx, mlx->x, mlx->text_x);
-		drawsprites(mlx, pl, map, ray);
 		mlx->x++;
 	}
+	drawsprites(mlx, pl, map, ray);
 }

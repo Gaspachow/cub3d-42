@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/06 15:01:36 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/07 11:44:17 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <mlx.h>
+# include </usr/X11/include/mlx.h>
 # define MAPW 24
 # define MAPH 24
 

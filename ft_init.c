@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/03 13:04:48 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/08 13:07:39 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	text->txt4 = mlx_xpm_file_to_image(mlx->ptr,
 	"textures/cat4.xpm", &(text->text4_w), &(text->text4_h));
 	text->txt5 = mlx_xpm_file_to_image(mlx->ptr,
-	"textures/texture1.xpm", &(text->text5_w), &(text->text5_h));
+	"textures/barrel.xpm", &(text->text5_w), &(text->text5_h));
 	text->txt1_data = (int *)mlx_get_data_addr(text->txt1,
 	&text->text1_sb, &text->text1_sl, &text->text1_ed);
 	text->txt2_data = (int *)mlx_get_data_addr(text->txt2,
