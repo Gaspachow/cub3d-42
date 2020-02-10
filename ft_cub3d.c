@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/08 13:11:08 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/10 10:52:39 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,16 @@ int		run_game(t_param *p)
 {
 	move(p);
 	raycast(p->pl, p->mlx, p->map, p->ray);
+	drawsprites(p->mlx, p->pl, p->map, p->ray);
 	mlx_put_image_to_window(p->mlx->ptr, p->mlx->win, p->mlx->img, 0, 0);
 	return (0);
 }
 
 int close_game(void *coucou)
 {
+	void *hey;
+
+	hey = coucou;
 	exit(EXIT_SUCCESS);
 }
 

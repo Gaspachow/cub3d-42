@@ -20,7 +20,7 @@ all:	$(NAME)
 .PHONY:	clean fclean re bonus bench bclean
 
 $(NAME):	$(OBJS)
-	gcc $(INCLUDEH) $(INCLUDEHXTRA) -o $(NAME) $(OBJS)
+	gcc $(FLAGS) $(INCLUDEH) $(INCLUDEHXTRA) -o $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)

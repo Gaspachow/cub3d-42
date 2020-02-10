@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/07 11:44:17 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/10 10:55:03 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ typedef struct		s_mlx
 	int				spr_h;
 	int				spr_start;
 	int				spr_end;
-	float			Zbuffer[5000];
 }					t_mlx;
 
 typedef struct		s_player
@@ -128,6 +127,7 @@ typedef struct		s_ray
 	char			walldir;
 	double			wallx;
 	int				wallside;
+	double			Zbuffer[4000];
 }					t_ray;
 
 typedef struct		s_param

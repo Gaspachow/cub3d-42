@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/08 13:20:51 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/10 10:41:23 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 		//2) it's on the screen (left)
 		//3) it's on the screen (right)
 		//4) ZBuffer, with perpendicular distance
-		if(transformY >= 0 && x >= 0 && x <= mlx->screen_w /*&& transformY < ZBuffer[x]*/)
+		if(transformY > 0 && x >= 0 && x < mlx->screen_w && transformY < (float)ray->Zbuffer[x])
 			for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current x
 			{
 				int d = (y) * 256 - mlx->screen_h * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats

@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:17:45 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/07 14:54:42 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/10 10:38:11 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	wallhit(t_world *map, t_ray *ray, t_mlx *mlx, t_player *pl)
 	}
 }
 
-void	walldist_dir(t_world *map, t_player *pl, t_ray *ray)
+void	walldist_dir(t_mlx *mlx, t_world *map, t_player *pl, t_ray *ray)
 {
 	if (ray->wallside == 1)
 	{
@@ -93,6 +93,7 @@ void	walldist_dir(t_world *map, t_player *pl, t_ray *ray)
 		(1 - map->step_x) / 2) / ray->dir_x;
 		ray->wallx = pl->pos_y + ray->walldist * ray->dir_y;
 	}
+	ray->Zbuffer[mlx->x] = ray->walldist;
 }
 
 void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
@@ -105,7 +106,7 @@ void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 		fov_and_pos(mlx, map, ray, pl);
 		get_step(map, ray, pl);
 		wallhit(map, ray, mlx, pl);
-		walldist_dir(map, pl, ray);
+		walldist_dir(mlx, map, pl, ray);
 		define_line(mlx, ray);
 		choose_texture(mlx, ray);
 		ray->wallx -= floor(ray->wallx);
@@ -113,5 +114,4 @@ void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 		drawline(mlx, mlx->x, mlx->text_x);
 		mlx->x++;
 	}
-	drawsprites(mlx, pl, map, ray);
 }
