@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/10 10:55:03 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/10 13:13:44 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ typedef	struct		s_txt
 	int				text5_ed;
 }					t_txt;
 
+typedef	struct		s_sprite
+{
+	float			x;
+	float			y;
+	void			*next;
+}					t_sprite;
+
 typedef struct		s_mlx
 {
 	void			*ptr;
@@ -84,6 +91,7 @@ typedef struct		s_mlx
 	int				spr_h;
 	int				spr_start;
 	int				spr_end;
+	t_sprite		*sprite;
 }					t_mlx;
 
 typedef struct		s_player
