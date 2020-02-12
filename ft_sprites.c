@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/12 12:09:52 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/12 17:02:01 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 {
-	int i = 0;
-	t_sprite *sprite;
+	int i;
+	t_sprite sprite;
 
-
+	i = 0;
 	while (i < 3)
 	{
-		sprite = &(mlx->sprite[i]);
+		sprite = *(mlx->sprite[i]);
 		i++;
-		float sprite_x = sprite->x + 0.5;
-		float sprite_y = sprite->y + 0.5;
+		float sprite_x = sprite.x + 0.5;
+		float sprite_y = sprite.y + 0.5;
 		//translate sprite position to relative to camera
 		double spriteX = sprite_x - pl->pos_x;
 		double spriteY = sprite_y - pl->pos_y;
@@ -74,6 +74,5 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 				}
 			x++;
 		}
-		sprite = sprite->next;
 	}
 }

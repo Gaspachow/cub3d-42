@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/12 12:07:57 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/12 16:56:37 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ typedef struct		s_mlx
 	int				spr_h;
 	int				spr_start;
 	int				spr_end;
-	t_sprite		sprite[200];
-	t_sprite		ordered_sprites[200];
+	t_sprite		**sprite;
 }					t_mlx;
 
 typedef struct		s_player
