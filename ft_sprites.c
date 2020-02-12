@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/12 10:20:38 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/12 12:09:52 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 {
-	t_sprite *sprite;
 	int i = 0;
+	t_sprite *sprite;
+
+
 	while (i < 3)
 	{
-		 
-	}
-
-	sprite = mlx->sprite;
-	while (sprite)
-	{
+		sprite = &(mlx->sprite[i]);
+		i++;
 		float sprite_x = sprite->x + 0.5;
 		float sprite_y = sprite->y + 0.5;
 		//translate sprite position to relative to camera
@@ -45,7 +43,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 		int drawStartY = -spriteHeight / 2 + mlx->screen_h / 2;
 		if(drawStartY < 0) drawStartY = 0;
 		int drawEndY = spriteHeight / 2 + mlx->screen_h / 2;
-		if(drawEndY >= mlx->screen_h) drawEndY = mlx->screen_h - 1;
+		if(drawEndY >= mlx->screen_h) drawEndY = mlx->screen_h + 1;
 
 		// SPRITE WIDTH
 		int spriteWidth = abs((int)(mlx->screen_h / (transformY)));
@@ -54,17 +52,17 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 			drawStartX = 0;
 		int drawEndX = spriteWidth / 2 + spriteScreenX;
 		if(drawEndX >= mlx->screen_w)
-			drawEndX = mlx->screen_w - 1;
+			drawEndX = mlx->screen_w + 1;
 
 		// DRAWING SPRITE
 		int x = drawStartX;
 		int y;
-		while (x <= drawEndX)
+		while (x < drawEndX)
 		{
 			int texX = (int)((x - (-spriteWidth / 2 + spriteScreenX)) * mlx->txt->text5_w / spriteWidth);
 			y = drawStartY;
 			if(transformY > 0 && x >= 0 && x < mlx->screen_w && transformY < (float)ray->Zbuffer[x])
-				while(y <= drawEndY)
+				while(y < drawEndY)
 				{
 					int d = (y) * 256 - mlx->screen_h * 128 + spriteHeight * 128;
 					int texY = ((d * mlx->txt->text5_h) / spriteHeight) / 256;

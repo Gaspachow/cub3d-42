@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/10 13:13:44 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/12 12:07:57 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include </usr/X11/include/mlx.h>
+# include "minilibx_opengl/mlx.h"
+# include "libft/libft.h"
 # define MAPW 24
 # define MAPH 24
 
@@ -91,7 +92,8 @@ typedef struct		s_mlx
 	int				spr_h;
 	int				spr_start;
 	int				spr_end;
-	t_sprite		*sprite;
+	t_sprite		sprite[200];
+	t_sprite		ordered_sprites[200];
 }					t_mlx;
 
 typedef struct		s_player
@@ -117,6 +119,8 @@ typedef struct		s_world
 	double			oldtime;
 	int				x;
 	int				y;
+	int				oldx;
+	int				oldy;
 	int				step_x;
 	int				step_y;
 	int				worldmap[24][24];

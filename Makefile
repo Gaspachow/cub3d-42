@@ -1,4 +1,3 @@
-
 SRCS	= $(wildcard ft*.c)
 
 OBJS	= $(SRCS:.c=.o)
@@ -9,9 +8,11 @@ GCC		= gcc
 
 FLAGS	= -Wall -Wextra -Werror
 
-INCLUDEH	= -I /usr/X11/include
+INCLUDEH	= -I minilibx
 
-INCLUDEHXTRA = -g -L /usr/X11/lib -l mlx -framework OpenGL -framework AppKit
+INCLUDEHXTRA = -L minilibx_opengl -l libmlx.a  -lmlx -framework OpenGL -framework AppKit
+
+MLX_DIR		=	minilibx_opengl
 
 
 
@@ -20,7 +21,9 @@ all:	$(NAME)
 .PHONY:	clean fclean re bonus bench bclean
 
 $(NAME):	$(OBJS)
-	gcc $(FLAGS) $(INCLUDEH) $(INCLUDEHXTRA) -o $(NAME) $(OBJS)
+	$(MAKE) -C libft
+	$(MAKE) -C minilibx_opengl
+	gcc $(FLAGS) -o $(NAME) $(OBJS) -L libft -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 clean:
 	rm -f $(OBJS)
