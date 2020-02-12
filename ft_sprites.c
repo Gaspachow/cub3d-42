@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/10 13:29:52 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/12 10:20:38 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 {
 	t_sprite *sprite;
+	int i = 0;
+	while (i < 3)
+	{
+		 
+	}
 
 	sprite = mlx->sprite;
-	char a = '0';
 	while (sprite)
 	{
-		a++;
 		float sprite_x = sprite->x + 0.5;
 		float sprite_y = sprite->y + 0.5;
 		//translate sprite position to relative to camera
@@ -56,12 +59,12 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 		// DRAWING SPRITE
 		int x = drawStartX;
 		int y;
-		while (x < drawEndX)
+		while (x <= drawEndX)
 		{
 			int texX = (int)((x - (-spriteWidth / 2 + spriteScreenX)) * mlx->txt->text5_w / spriteWidth);
 			y = drawStartY;
 			if(transformY > 0 && x >= 0 && x < mlx->screen_w && transformY < (float)ray->Zbuffer[x])
-				while(y < drawEndY)
+				while(y <= drawEndY)
 				{
 					int d = (y) * 256 - mlx->screen_h * 128 + spriteHeight * 128;
 					int texY = ((d * mlx->txt->text5_h) / spriteHeight) / 256;
@@ -73,7 +76,6 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 				}
 			x++;
 		}
-		write(1, &a, 1);
 		sprite = sprite->next;
 	}
 }
