@@ -6,22 +6,54 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/12 17:02:01 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/13 12:40:10 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
+
+void	sort_sprites(t_mlx *mlx, t_player *pl)
+{
+	double		distance[3];
+	int 		tmp;
+	int			disttmp;
+	int 		i;
+	i = -1;
+
+	while (++i < 3)
+	{
+		distance[i] = ((pl->pos_x - mlx->sprites[i]->x) * (pl->pos_x - mlx->sprites[i]->x) + (pl->pos_y - mlx->sprites[i]->y) * (pl->pos_y - mlx->sprites[i]->y));
+		mlx->spr_order[i] = i;
+	}
+	i = -1;
+	while(++i < 3 - 1)
+	{
+		if (distance[i] < distance[i + 1])
+		{
+			disttmp = distance[i];
+			distance[i] = distance[i + 1];
+			distance[i + 1] = disttmp;
+			tmp = mlx->spr_order[i];
+			mlx->spr_order[i] = mlx->spr_order[i + 1];
+			mlx->spr_order[i + 1] = tmp;
+			i = -1;
+		}
+	}
+}
 
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 {
 	int i;
 	t_sprite sprite;
 
+	sort_sprites(mlx, pl);
 	i = 0;
+	write(1, "1", 1);
 	while (i < 3)
 	{
-		sprite = *(mlx->sprite[i]);
+		sprite = *(mlx->sprites[mlx->spr_order[i]]);
 		i++;
+		write(1, "2", 1);
 		float sprite_x = sprite.x + 0.5;
 		float sprite_y = sprite.y + 0.5;
 		//translate sprite position to relative to camera
@@ -43,7 +75,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 		int drawStartY = -spriteHeight / 2 + mlx->screen_h / 2;
 		if(drawStartY < 0) drawStartY = 0;
 		int drawEndY = spriteHeight / 2 + mlx->screen_h / 2;
-		if(drawEndY >= mlx->screen_h) drawEndY = mlx->screen_h + 1;
+		if(drawEndY >= mlx->screen_h) drawEndY = mlx->screen_h;
 
 		// SPRITE WIDTH
 		int spriteWidth = abs((int)(mlx->screen_h / (transformY)));
@@ -52,7 +84,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 			drawStartX = 0;
 		int drawEndX = spriteWidth / 2 + spriteScreenX;
 		if(drawEndX >= mlx->screen_w)
-			drawEndX = mlx->screen_w + 1;
+			drawEndX = mlx->screen_w;
 
 		// DRAWING SPRITE
 		int x = drawStartX;
@@ -75,4 +107,5 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 			x++;
 		}
 	}
+	write(1, "3", 1);
 }
