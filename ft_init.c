@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/13 12:38:59 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/13 14:30:13 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	mlx->sprites[1] = sprite2;
 	mlx->sprites[2] = sprite3;
 	mlx->sprites[3] = NULL;
+	mlx->spr_number = 3;
 }
 
 

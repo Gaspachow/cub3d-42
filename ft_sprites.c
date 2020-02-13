@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/13 12:40:10 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/13 16:13:35 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 void	sort_sprites(t_mlx *mlx, t_player *pl)
 {
-	double		distance[3];
+	double		distance[mlx->spr_number];
 	int 		tmp;
 	int			disttmp;
 	int 		i;
-	i = -1;
 
-	while (++i < 3)
+	i = -1;
+	while (++i < mlx->spr_number)
 	{
 		distance[i] = ((pl->pos_x - mlx->sprites[i]->x) * (pl->pos_x - mlx->sprites[i]->x) + (pl->pos_y - mlx->sprites[i]->y) * (pl->pos_y - mlx->sprites[i]->y));
 		mlx->spr_order[i] = i;
 	}
 	i = -1;
-	while(++i < 3 - 1)
-	{
+	while(++i < mlx->spr_number - 1)
 		if (distance[i] < distance[i + 1])
 		{
 			disttmp = distance[i];
@@ -38,7 +37,6 @@ void	sort_sprites(t_mlx *mlx, t_player *pl)
 			mlx->spr_order[i + 1] = tmp;
 			i = -1;
 		}
-	}
 }
 
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
@@ -49,7 +47,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 	sort_sprites(mlx, pl);
 	i = 0;
 	write(1, "1", 1);
-	while (i < 3)
+	while (i < mlx->spr_number)
 	{
 		sprite = *(mlx->sprites[mlx->spr_order[i]]);
 		i++;
@@ -89,6 +87,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 		// DRAWING SPRITE
 		int x = drawStartX;
 		int y;
+		write(1, "3", 1);
 		while (x < drawEndX)
 		{
 			int texX = (int)((x - (-spriteWidth / 2 + spriteScreenX)) * mlx->txt->text5_w / spriteWidth);
@@ -107,5 +106,5 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 			x++;
 		}
 	}
-	write(1, "3", 1);
+	write(1, "4", 1);
 }
