@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 14:04:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/14 16:06:56 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/15 13:35:47 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void    int_to_char(unsigned char *c, int i)
 	c[3] = (unsigned char)(i >> 24);
 }
 
-void    bmp_header(int fd, int h, int w, int padsize)
+int    bmp_header(int fd, int h, int w, int padsize)
 {
     unsigned char   header[54];
     int             filesize;
@@ -39,4 +39,40 @@ void    bmp_header(int fd, int h, int w, int padsize)
 	return (!(write(fd, header, 54) < 0));
 }
 
-void    bmp_data(int fd, t_mlx *mlx, int padsize)
+int    bmp_data(int fd, t_mlx *mlx, int padsize)
+{
+	unsigned char	zero[3];
+	int				x;
+	int				y;
+	int				pixel;
+
+	y = mlx->screen_h - 1;
+	ft_bzero(zero, 3);
+	while(y >= 0)
+	{
+		x = 0;
+		while (x < mlx->screen_w)
+		{
+			pixel = *(mlx->d_ad + x + y * mlx->sl / 4);
+			if (write(fd, &pixel, 3) < 0)
+				return (0);
+			if (padsize > 0 && write(fd, &zero, padsize) < 0)
+				return (0);
+			x++;
+		}
+		y--;
+	}
+}
+
+int		make_screenshot(t_mlx *mlx)
+{
+	int padsize;
+	int fd;
+
+	padsize = (4 - ((int)mlx->screen_w * 3) % 4) % 4;
+	if ((fd = open("screenshot.bmp", O_WRONLY | O_CREAT | O_TRUNC | O_APPEND)) < 0)
+		return (0);
+	bmp_header(fd, mlx->screen_h, mlx->screen_w, padsize);
+	bmp_data(fd, mlx, padsize);
+	close (fd);
+}

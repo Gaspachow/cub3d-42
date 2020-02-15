@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/13 14:30:01 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/15 13:18:12 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include "minilibx_opengl/mlx.h"
 # include "libft/libft.h"
 # define MAPW 24
@@ -168,7 +169,7 @@ void	define_line(t_mlx *mlx, t_ray *ray);
 void	choose_texture(t_mlx *mlx, t_ray *ray);
 int		key_release(int key, t_param *p);
 int		move(t_param *params);
-int 	close_game(void *coucou);
+int 	close_game(t_param *coucou);
 void	define_sprite_line(t_mlx *mlx, t_ray *ray);
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
 

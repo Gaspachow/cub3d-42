@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/13 12:36:34 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/15 13:27:37 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,12 @@ int		run_game(t_param *p)
 	return (0);
 }
 
-int close_game(void *coucou)
+int close_game(t_param *coucou)
 {
 	void *hey;
-
+	
 	hey = coucou;
+	make_screenshot(coucou->mlx);
 	exit(EXIT_SUCCESS);
 }
 
