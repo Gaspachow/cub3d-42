@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 14:04:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/17 14:37:51 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 14:45:27 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int    bmp_data(int fd, t_mlx *mlx, int padsize)
 		}
 		y--;
 	}
+	return (1);
 }
 
 int		make_screenshot(t_mlx *mlx)
