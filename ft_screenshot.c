@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 14:04:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/17 11:36:03 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 14:37:51 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ int		make_screenshot(t_mlx *mlx)
 	bmp_header(fd, mlx->screen_h, mlx->screen_w, padsize);
 	bmp_data(fd, mlx, padsize);
 	close (fd);
+	return (1);
 }

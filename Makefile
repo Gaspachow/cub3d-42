@@ -30,6 +30,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f screenshot.bmp
 
 re: fclean all
 

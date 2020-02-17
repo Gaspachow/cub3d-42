@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/15 13:18:12 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 13:56:47 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,6 @@ int		move(t_param *params);
 int 	close_game(t_param *coucou);
 void	define_sprite_line(t_mlx *mlx, t_ray *ray);
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
+int		make_screenshot(t_mlx *mlx);
 
 #endif
