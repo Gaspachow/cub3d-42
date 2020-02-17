@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/17 18:54:48 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 19:30:07 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,41 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	mlx->spr_number = 3;
 }
 
+void	set_cameraNS(char dir, t_player *pl)
+{
+	if (dir == 'N')
+	{
+		pl->dir_x = -1;
+		pl->dir_y = 0;
+		pl->plane_x = 0;
+		pl->plane_y = 0.66;
+	}
+	else if (dir == 'S')
+	{
+		pl->dir_x = 1;
+		pl->dir_y = 0;
+		pl->plane_x = 0;
+		pl->plane_y = -0.66;
+	}
+}
+
+void	set_cameraEW(char dir, t_player *pl)
+{
+	if (dir == 'W')
+	{
+		pl->dir_x = 0;
+		pl->dir_y = -1;
+		pl->plane_x = -0.66;
+		pl->plane_y = 0;
+	}
+	else if (dir == 'E')
+	{
+		pl->dir_x = 0;
+		pl->dir_y = 1;
+		pl->plane_x = 0.66;
+		pl->plane_y = 0;
+	}
+}
 
 int		player_init(int x, int y, char dir, t_param *p)
 {
@@ -69,34 +104,12 @@ int		player_init(int x, int y, char dir, t_param *p)
 		done = 1;	
 	p->pl->pos_x = x;
 	p->pl->pos_y = y;
-	if (dir == 'N')
-	{
-		p->pl->dir_x = -1;
-		p->pl->dir_y = 0;
-		p->pl->plane_x = 0;
-		p->pl->plane_y = 0.66;
-	}
-	else if (dir == 'S')
-	{
-		p->pl->dir_x = 1;
-		p->pl->dir_y = 0;
-		p->pl->plane_x = 0;
-		p->pl->plane_y = -0.66;
-	}
-	else if (dir == 'W')
-	{
-		p->pl->dir_x = 0;
-		p->pl->dir_y = -1;
-		p->pl->plane_x = -0.66;
-		p->pl->plane_y = 0;
-	}
-	else if (dir == 'E')
-	{
-		p->pl->dir_x = 0;
-		p->pl->dir_y = 1;
-		p->pl->plane_x = 0.66;
-		p->pl->plane_y = 0;
-	}
+	if (dir == 'N' || dir == 'S')
+		set_cameraNS(dir, p->pl);
+	else if (dir == 'E' || dir == 'W')
+		set_cameraEW(dir, p->pl);
+	else
+		return (EXIT_FAILURE);
 	p->pl->forward = 0;
 	p->pl->backward = 0;
 	p->pl->left = 0;
