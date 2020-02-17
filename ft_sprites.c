@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/13 16:13:35 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 17:48:17 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 
 	sort_sprites(mlx, pl);
 	i = 0;
-	write(1, "1", 1);
 	while (i < mlx->spr_number)
 	{
 		sprite = *(mlx->sprites[mlx->spr_order[i]]);
 		i++;
-		write(1, "2", 1);
+
 		float sprite_x = sprite.x + 0.5;
 		float sprite_y = sprite.y + 0.5;
 		//translate sprite position to relative to camera
@@ -87,7 +86,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 		// DRAWING SPRITE
 		int x = drawStartX;
 		int y;
-		write(1, "3", 1);
+
 		while (x < drawEndX)
 		{
 			int texX = (int)((x - (-spriteWidth / 2 + spriteScreenX)) * mlx->txt->text5_w / spriteWidth);
@@ -106,5 +105,4 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 			x++;
 		}
 	}
-	write(1, "4", 1);
 }

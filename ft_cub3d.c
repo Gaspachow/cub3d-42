@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/15 13:27:37 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 18:55:35 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,9 @@ int		main()
 	params.map = &map;
 	params.ray = &ray;
 	mlx.txt = &text;
-	player_init(&one);
-	make_map(map.worldmap, worldmap, MAPW, MAPH);
+	parse_cub("ok.cub", &params);
 	mlx.screen_h = 720;
-	mlx.screen_w = 1280;
+	mlx.screen_w = 720;
 	if (!(mlx.ptr = mlx_init()))
 		return (EXIT_FAILURE);
 	if (!(mlx.win = mlx_new_window(mlx.ptr, mlx.screen_w, mlx.screen_h, "cub3d")))

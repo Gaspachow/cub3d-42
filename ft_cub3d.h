@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/17 13:56:47 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 18:27:27 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct		s_player
 	char			right;
 	char			leftrot;
 	char			rightrot;
+	char			positioned;
 }					t_player;
 
 typedef struct		s_world
@@ -126,7 +127,7 @@ typedef struct		s_world
 	int				oldy;
 	int				step_x;
 	int				step_y;
-	int				worldmap[24][24];
+	int				**worldmap;
 }					t_world;
 
 typedef struct		s_ray
@@ -155,7 +156,7 @@ typedef struct		s_param
 
 int		rgb_int(int red, int green, int blue);
 int		drawline(t_mlx *mlx, int x, int text_x);
-void	player_init(t_player *pl);
+int		player_init(int x, int y, char dir, t_param *p);
 void	get_step(t_world *map, t_ray *ray, t_player *pl);
 void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray);
 void	rotation(t_player *pl);
@@ -173,5 +174,6 @@ int 	close_game(t_param *coucou);
 void	define_sprite_line(t_mlx *mlx, t_ray *ray);
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
 int		make_screenshot(t_mlx *mlx);
+int		parse_cub(char *fname, t_param *p);
 
 #endif
