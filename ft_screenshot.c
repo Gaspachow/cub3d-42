@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 14:04:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/17 14:45:27 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/17 15:24:29 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		make_screenshot(t_mlx *mlx)
 	int fd;
 
 	padsize = (4 - ((int)mlx->screen_w * 3) % 4) % 4;
-	if ((fd = open("screenshot.bmp", O_WRONLY | O_CREAT | O_TRUNC | O_APPEND)) < 0)
+	if ((fd = open("screenshot.bmp", O_WRONLY | O_CREAT, 0777| O_TRUNC | O_APPEND)) < 0)
 		return (0);
 	bmp_header(fd, mlx->screen_h, mlx->screen_w, padsize);
 	bmp_data(fd, mlx, padsize);
