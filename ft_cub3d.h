@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 13:08:23 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 14:21:52 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,34 @@ typedef struct 		s_parse
 }					t_parse;
 
 
-typedef	struct		s_sprite
+typedef	struct		s_spriteptr
 {
 	float			x;
 	float			y;
 	void			*next;
-}					t_sprite;
+}					t_spriteptr;
+
+typedef struct		s_sprtools
+{
+	double			spritex;
+	double			spritey;
+	double			invdet;
+	double			transformx;
+	double			transformy;
+	int				spritescreenx;
+	int				spriteheight;
+	int				drawstarty;
+	int				drawendy;
+	int				spritewidth;
+	int				drawstartx;
+	int				drawendx;
+	int				tex_x;
+	int				tex_y;
+	int				x;
+	int				y;
+	int				d;
+}					t_sprtools;
+
 
 typedef struct		s_mlx
 {
@@ -104,8 +126,8 @@ typedef struct		s_mlx
 	int				spr_h;
 	int				spr_start;
 	int				spr_end;
-	t_sprite		**sprites;
-	t_sprite		**sorted_sprites;
+	t_spriteptr		**sprites;
+	t_spriteptr		**sorted_sprites;
 	int				spr_order[3];
 	int				spr_number;
 }					t_mlx;

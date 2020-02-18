@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 13:04:35 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:52:50 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	&text->text5_sb, &text->text5_sl, &text->text5_ed);
 	mlx->sprite_hit = 0;
 
-	t_sprite *sprite1;
-	t_sprite *sprite2;
-	t_sprite *sprite3;
+	t_spriteptr *sprite1;
+	t_spriteptr *sprite2;
+	t_spriteptr *sprite3;
 
-	sprite1 = malloc(sizeof(t_sprite));
-	sprite2 = malloc(sizeof(t_sprite));
-	sprite3 = malloc(sizeof(t_sprite));
+	sprite1 = malloc(sizeof(t_spriteptr));
+	sprite2 = malloc(sizeof(t_spriteptr));
+	sprite3 = malloc(sizeof(t_spriteptr));
 
 	sprite1->x = 8;
 	sprite1->y = 8;
