@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 18:08:54 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 20:03:14 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int		fill_map(char **lines, int fd, t_param *p)
 	p->j = 0;
 	while (lines[p->i])
 	{
-		p->map->worldmap[p->i] = malloc((ft_strlen(lines[p->i]) + 1) *
-		sizeof(int *));
 		p->j = 0;
 		while (lines[p->i][p->j])
 		{
@@ -32,7 +30,6 @@ int		fill_map(char **lines, int fd, t_param *p)
 				p->map->worldmap[p->i][p->j] = lines[p->i][p->j] - '0';
 			p->j++;
 		}
-		p->map->worldmap[p->i][p->j] = -1;
 		free(lines[p->i]);
 		p->i++;
 	}
@@ -69,6 +66,45 @@ int		get_lines(char ***lines, char ***tmp, int fd)
 	return (i);
 }
 
+int		get_max_y(char **lines)
+{
+	int i;
+	int len;
+	int biglen;
+
+	i = 0;
+	biglen = 0;
+	while (lines[i])
+	{
+		len = ft_strlen(lines[i]);
+		if (len > biglen)
+			biglen = len;
+		i++;
+	}
+	return (biglen);
+}
+
+void	init_map(t_world *map)
+{
+	int i;
+	int j;
+
+	i = 0;
+	map->worldmap = malloc((map->max_x + 1) * sizeof(int *));
+	map->worldmap[map->max_x + 1] = 0;
+	while (i <= map->max_x)
+	{
+		map->worldmap[i] = malloc((map->max_y + 1) * sizeof(int));
+		j = 0;
+		while (j <= map->max_y)
+		{
+			map->worldmap[i][j] = -1;
+			j++;
+		}
+		i++;
+	}
+}
+
 int		parse_cub(char *fname, t_param *p)
 {
 	int		fd;
@@ -78,8 +114,13 @@ int		parse_cub(char *fname, t_param *p)
 	fd = open(fname, O_RDONLY);
 	lines = 0;
 	p->map->max_x = get_lines(&lines, &tmp, fd) - 1;
-	p->map->worldmap = malloc((p->map->max_x + 1) * sizeof(int *));
-	p->map->worldmap[p->map->max_x + 1] = 0;
+	p->map->max_y = get_max_y(lines);
+	init_map(p->map);
 	fill_map(lines, fd, p);
+	if (!(checkmap(p, p->pl->pos_x, p->pl->pos_y)))
+		{
+			write(1, "ERROR: MAP UNCLOSED\n", 20);
+			exit(EXIT_FAILURE);
+		}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 17:42:56 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 19:43:41 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,9 @@ typedef struct		s_world
 	int				step_x;
 	int				step_y;
 	int				**worldmap;
+	int				**mapcopy;
 	int				max_x;
+	int				max_y;
 }					t_world;
 
 typedef struct		s_ray
@@ -210,5 +212,6 @@ void	define_sprite_line(t_mlx *mlx, t_ray *ray);
 void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
 int		make_screenshot(t_mlx *mlx);
 int		parse_cub(char *fname, t_param *p);
+int		checkmap(t_param *p, int x, int y);
 
 #endif
