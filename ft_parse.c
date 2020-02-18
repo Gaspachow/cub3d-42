@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 14:27:11 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 18:08:54 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		get_lines(char ***lines, char ***tmp, int fd)
 	i = 1;
 	while (ret)
 	{
-		ret = get_next_line(fd, &s);
+		ret = gnl_space(fd, &s);
 		(*tmp) = (*lines);
 		j = 0;
 		(*lines) = malloc((i + 1) * sizeof(char *));
@@ -66,21 +66,20 @@ int		get_lines(char ***lines, char ***tmp, int fd)
 		(*lines)[j] = 0;
 		i++;
 	}
-	return (j);
+	return (i);
 }
 
 int		parse_cub(char *fname, t_param *p)
 {
 	int		fd;
-	int		j;
 	char	**tmp;
 	char	**lines;
 
 	fd = open(fname, O_RDONLY);
 	lines = 0;
-	j = get_lines(&lines, &tmp, fd);
-	p->map->worldmap = malloc(j * sizeof(int *));
-	p->map->worldmap[j] = 0;
+	p->map->max_x = get_lines(&lines, &tmp, fd) - 1;
+	p->map->worldmap = malloc((p->map->max_x + 1) * sizeof(int *));
+	p->map->worldmap[p->map->max_x + 1] = 0;
 	fill_map(lines, fd, p);
 	return (1);
 }

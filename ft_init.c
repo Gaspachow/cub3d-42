@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 13:52:50 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 17:34:18 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	set_cameraEW(char dir, t_player *pl)
 
 int		player_init(int x, int y, char dir, t_param *p)
 {
-	p->pl->pos_x = x;
-	p->pl->pos_y = y;
+	p->pl->pos_x = x + 0.5;
+	p->pl->pos_y = y + 0.5;
 	if (dir == 'N' || dir == 'S')
 		set_cameraNS(dir, p->pl);
 	else if (dir == 'E' || dir == 'W')

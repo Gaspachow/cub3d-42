@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 14:24:53 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 17:42:56 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ typedef	struct		s_spriteptr
 {
 	float			x;
 	float			y;
-	void			*next;
 }					t_spriteptr;
 
 typedef struct		s_sprtools
@@ -161,6 +160,7 @@ typedef struct		s_world
 	int				step_x;
 	int				step_y;
 	int				**worldmap;
+	int				max_x;
 }					t_world;
 
 typedef struct		s_ray
