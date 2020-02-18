@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 14:21:52 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 14:24:53 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ typedef struct		s_param
 	t_player		*pl;
 	t_world			*map;
 	t_ray			*ray;
+	int				i;
+	int				j;
 }					t_param;
 
 int		rgb_int(int red, int green, int blue);
