@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/17 18:27:27 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:08:23 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,17 @@ typedef	struct		s_txt
 	int				text5_sb;
 	int				text5_ed;
 }					t_txt;
+
+typedef struct 		s_parse
+{
+	int				i;
+	int				j;
+	char			**lines;
+	char			**tmp;
+	int				fd;
+	char			*s;
+}					t_parse;
+
 
 typedef	struct		s_sprite
 {
