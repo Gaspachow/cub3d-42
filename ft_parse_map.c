@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:40:02 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 20:56:28 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 21:26:10 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	parse_map(t_param *p, char **maplines)
 	p->map->max_y = get_max_y(maplines);
 	init_map(p->map);
 	make_map(maplines, p->map, p);
-	free(maplines);
+	// free(maplines);
 	check_player(p);
 	checkmap(p, p->pl->pos_x, p->pl->pos_y);
 }
