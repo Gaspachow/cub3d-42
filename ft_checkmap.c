@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:31:02 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 20:31:39 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 11:26:15 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		checkmap(t_param *p, int x, int y)
 		return (1);
 	if (x == 0 || y == 0 || x == p->map->max_x)
 		return (0);
-	if (map[x][y] == -1)
+	if (map[x][y] == 8)
 		return (0);
 	if (map[x][y] == 0)
 		map[x][y] = 3;
