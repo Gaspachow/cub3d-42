@@ -6,30 +6,11 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 11:46:32 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 16:52:52 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
-
-void	make_map(int map[24][24], int wmap[24][24], int x, int y)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < x)
-	{
-		while (j < y)
-		{
-			map[i][j] = wmap[i][j];
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-}
 
 int		run_game(t_param *p)
 {

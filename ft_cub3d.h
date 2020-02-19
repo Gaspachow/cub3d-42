@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 13:09:13 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 18:56:54 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,27 +191,30 @@ typedef struct		s_param
 	int				j;
 }					t_param;
 
-int		rgb_int(int red, int green, int blue);
-int		drawline(t_mlx *mlx, int x, int text_x);
-int		player_init(int x, int y, char dir, t_param *p);
-void	get_step(t_world *map, t_ray *ray, t_player *pl);
-void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray);
-void	rotation(t_player *pl);
-void	mov_updown(t_player *pl, t_world *map, float speed);
-void	mov_leftright(t_player *pl, t_world *map, float speed);
-int		key_press(int key, t_param *params);
-int		key_release(int key, t_param *params);
-int		run_game(t_param *params);
-void	txt_init(t_txt *text, t_mlx *mlx);
-void	define_line(t_mlx *mlx, t_ray *ray);
-void	choose_texture(t_mlx *mlx, t_ray *ray);
-int		key_release(int key, t_param *p);
-int		move(t_param *params);
-int 	close_game(t_param *coucou);
-void	define_sprite_line(t_mlx *mlx, t_ray *ray);
-void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
-int		make_screenshot(t_mlx *mlx);
-int		parse_cub(char *fname, t_param *p);
-int		checkmap(t_param *p, int x, int y);
+int			rgb_int(int red, int green, int blue);
+int			drawline(t_mlx *mlx, int x, int text_x);
+int			player_init(int x, int y, char dir, t_param *p);
+void		get_step(t_world *map, t_ray *ray, t_player *pl);
+void		raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray);
+void		rotation(t_player *pl);
+void		mov_updown(t_player *pl, t_world *map, float speed);
+void		mov_leftright(t_player *pl, t_world *map, float speed);
+int			key_press(int key, t_param *params);
+int			key_release(int key, t_param *params);
+int			run_game(t_param *params);
+void		txt_init(t_txt *text, t_mlx *mlx);
+void		define_line(t_mlx *mlx, t_ray *ray);
+void		choose_texture(t_mlx *mlx, t_ray *ray);
+int			key_release(int key, t_param *p);
+int			move(t_param *params);
+int 		close_game(t_param *coucou);
+void		define_sprite_line(t_mlx *mlx, t_ray *ray);
+void		drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
+int			make_screenshot(t_mlx *mlx);
+int			parse_cub(char *fname, t_param *p);
+void		checkmap(t_param *p, int x, int y);
+void		parse_map(t_param *p, char **maplines);
+void		put_error(char *message, t_param *p);
+t_spriteptr	*get_sprites(t_param *p);
 
 #endif

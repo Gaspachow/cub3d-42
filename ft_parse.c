@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 15:41:19 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 18:42:12 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,8 @@ int		parse_cub(char *fname, t_param *p)
 	fd = open(fname, O_RDONLY);
 	lines = 0;
 	get_lines(&lines, &tmp, fd);
-	p->map->max_x = get_map(lines, p->map);
-	p->map->max_y = get_max_y(lines);
-	init_map(p->map);
-	fill_map(lines, fd, p);
-	free(lines);
 	close(fd);
-	if (!(checkmap(p, p->pl->pos_x, p->pl->pos_y)))
-		put_error("ERROR: MAP NOT CLOSED\n", p);
+	parse_map(p, lines);
 	p->mlx->sprites = get_sprites(p);
 	p->mlx->sprite_hit = 0;
 	return (1);

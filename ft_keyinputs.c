@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:30:16 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 12:43:12 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 19:13:12 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ void	mov_updown(t_player *pl, t_world *map, float speed)
 	if (pl->forward)// UP
 	{
 		if (can_move(map->worldmap[(int)(pl->pos_x + pl->dir_x * speed)][(int)(pl->pos_y)]))
-			pl->pos_x += pl->dir_x * speed;
+			pl->pos_x += pl->dir_x * speed * 0.5;
 		if (can_move(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y + pl->dir_y * speed)]))
-			pl->pos_y += pl->dir_y * speed;
+			pl->pos_y += pl->dir_y * speed * 0.5;
 	}
 	if (pl->backward) // DOWN
 	{
 		if (can_move(map->worldmap[(int)(pl->pos_x - pl->dir_x * speed)][(int)(pl->pos_y)]))
-			pl->pos_x -= pl->dir_x * speed;
+			pl->pos_x -= pl->dir_x * speed * 0.5;
 		if (can_move(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y - pl->dir_y * speed)]))
-		pl->pos_y -= pl->dir_y * speed;
+		pl->pos_y -= pl->dir_y * speed * 0.5;
 	}
 }
 
@@ -67,16 +67,16 @@ void	mov_leftright(t_player *pl, t_world *map, float speed)
 	if (pl->left) // LEFT
 	{
 		if (can_move(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y + pl->dir_x * speed)]))
-			pl->pos_y += pl->dir_x * speed;
+			pl->pos_y += pl->dir_x * speed * 0.5;
 		if (can_move(map->worldmap[(int)(pl->pos_x - pl->dir_y * speed)][(int)(pl->pos_y)]))
-			pl->pos_x -= pl->dir_y * speed;
+			pl->pos_x -= pl->dir_y * speed * 0.5;
 	}
 	if (pl->right) // RIGHT
 	{
 		if (can_move(map->worldmap[(int)(pl->pos_x)][(int)(pl->pos_y - pl->dir_x * speed)]))
-			pl->pos_y -= pl->dir_x * speed;
+			pl->pos_y -= pl->dir_x * speed * 0.5;
 		if (can_move(map->worldmap[(int)(pl->pos_x + pl->dir_y * speed)][(int)(pl->pos_y)]))
-			pl->pos_x += pl->dir_y * speed;
+			pl->pos_x += pl->dir_y * speed * 0.5;
 	}
 }
 
@@ -84,7 +84,7 @@ int		move(t_param *params)
 {
 	float speed;
 
-	speed = 0.1;
+	speed = 0.2;
 	mov_updown(params->pl, params->map, speed);
 	mov_leftright(params->pl, params->map, speed);
 	rotation(params->pl);
