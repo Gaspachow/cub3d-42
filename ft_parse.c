@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 11:32:37 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 11:42:30 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,27 +85,6 @@ int		get_max_y(char **lines)
 	return (biglen);
 }
 
-void	print_map(t_world *map)
-{
-	int x;
-	int y;
-	x = 0;
-	y = 0;
-	while (x <= map->max_x)
-	{
-		y = 0;
-		while (y <= map->max_y)
-		{
-			ft_putnbr(map->worldmap[x][y]);
-			write(1, " ", 1);
-			y++;
-		}
-		x++;
-		write(1, "\n", 1);
-	}
-	write(1, "\n-----------------\n", 19);
-}
-
 void	init_map(t_world *map)
 {
 	int i;
@@ -140,10 +119,10 @@ int		parse_cub(char *fname, t_param *p)
 	fill_map(lines, fd, p);
 	print_map(p->map);
 	if (!(checkmap(p, p->pl->pos_x, p->pl->pos_y)))
-		{
-			write(1, "ERROR: MAP UNCLOSED\n", 20);
-			exit(EXIT_FAILURE);
-		}
+	{
+		write(1, "ERROR: MAP UNCLOSED\n", 20);
+		exit(EXIT_FAILURE);
+	}
 	print_map(p->map);
 	return (1);
 }
