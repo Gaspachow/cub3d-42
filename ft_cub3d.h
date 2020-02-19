@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 18:56:54 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 20:20:47 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ typedef struct		s_player
 	char			right;
 	char			leftrot;
 	char			rightrot;
-	char			positioned;
+	char			pos;
 }					t_player;
 
 typedef struct		s_world
@@ -216,5 +216,6 @@ void		checkmap(t_param *p, int x, int y);
 void		parse_map(t_param *p, char **maplines);
 void		put_error(char *message, t_param *p);
 t_spriteptr	*get_sprites(t_param *p);
+void		check_player(t_param *p);
 
 #endif

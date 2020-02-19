@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 17:54:49 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 20:20:56 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,16 @@ void	set_cameraEW(char dir, t_player *pl)
 
 int		player_init(int x, int y, char dir, t_param *p)
 {
+	if (dir != 'N' && dir != 'S' && dir != 'E' && dir != 'W')
+		put_error("ERROR: INVALID MAP ITEM\n", p);
+	if (p->pl->pos > 0)
+		put_error("ERROR: MULTIPLE SPAWNPOINTS SET\n", p);
 	p->pl->pos_x = x + 0.5;
 	p->pl->pos_y = y + 0.5;
 	if (dir == 'N' || dir == 'S')
 		set_cameraNS(dir, p->pl);
-	else if (dir == 'E' || dir == 'W')
-		set_cameraEW(dir, p->pl);
 	else
-		return (EXIT_FAILURE);
+		set_cameraEW(dir, p->pl);
 	p->pl->forward = 0;
 	p->pl->backward = 0;
 	p->pl->left = 0;

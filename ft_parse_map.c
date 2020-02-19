@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:40:02 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 18:57:18 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 20:39:26 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,37 +88,7 @@ void	init_map(t_world *map)
 		j = 0;
 		while (j <= map->max_y)
 		{
-			map->worldmap[i][j] = 8;
-			j++;
-		}
-		i++;
-	}
-}
-
-int		check_mapvalue(int value, int x, int y, t_param *p)
-{
-	if (value == 35 || value == 21 || value == 39 || value == 30)
-	{
-		player_init(x, y, (value + 48), p);
-		return (1);
-	}
-	return (0);
-}
-
-void	check_player(t_param *p)
-{
-	int	i;
-	int	j;
-	int done;
-
-	i = 0;
-	done = 0;
-	while(i <= p->map->max_x && !done)
-	{
-		j = 0;
-		while (j <= p->map->max_y && !done)
-		{
-			done = check_mapvalue(p->map->worldmap[i][j], i, j, p);
+			map->worldmap[i][j] = -1;
 			j++;
 		}
 		i++;
