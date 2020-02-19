@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 19:44:12 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 21:08:16 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,30 @@ int		get_lines(char ***lines, char ***tmp, int fd)
 	return (i - 1);
 }
 
+void	choose_param(char c, char *str, t_param *p)
+{
+	if (c == 'R')
+		make_resolution(c, str, p);
+}
+
+void	parse_parameters(t_param *p, char ***l)
+{
+	int i;
+	int j;
+	int map;
+
+	i = 0;
+	map = 0;
+	while (*l)
+	{
+		j = 0;
+		while ((*l)[i][j] == ' ')
+			j++;
+		choose_param((*l)[i][j], (*l)[i], p);
+		free((*l)[i]);
+	}
+}
+
 int		parse_cub(char *fname, t_param *p)
 {
 	int		fd;
@@ -51,6 +75,7 @@ int		parse_cub(char *fname, t_param *p)
 	lines = 0;
 	get_lines(&lines, &tmp, fd);
 	close(fd);
+	parse_parameters(p, &lines);
 	parse_map(p, lines);
 	p->mlx->sprites = get_sprites(p);
 	p->mlx->sprite_hit = 0;
