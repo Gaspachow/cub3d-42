@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 17:34:18 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 13:44:48 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,6 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	&text->text4_sb, &text->text4_sl, &text->text4_ed);
 	text->txt5_data = (int *)mlx_get_data_addr(text->txt5,
 	&text->text5_sb, &text->text5_sl, &text->text5_ed);
-	mlx->sprite_hit = 0;
-
-	t_spriteptr *sprite1;
-	t_spriteptr *sprite2;
-	t_spriteptr *sprite3;
-
-	sprite1 = malloc(sizeof(t_spriteptr));
-	sprite2 = malloc(sizeof(t_spriteptr));
-	sprite3 = malloc(sizeof(t_spriteptr));
-
-	sprite1->x = 8;
-	sprite1->y = 8;
-	sprite2->x = 10;
-	sprite2->y = 8;
-	sprite3->x = 9;
-	sprite3->y = 8;
-
-	mlx->sprites = malloc(sizeof(sprite1) * 4);
-	mlx->sprites[0] = sprite1;
-	mlx->sprites[1] = sprite2;
-	mlx->sprites[2] = sprite3;
-	mlx->sprites[3] = NULL;
-	mlx->spr_number = 3;
 }
 
 void	set_cameraNS(char dir, t_player *pl)

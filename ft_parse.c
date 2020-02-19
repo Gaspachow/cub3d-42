@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 11:42:30 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 13:45:22 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,56 @@ void	init_map(t_world *map)
 	}
 }
 
+int		count_sprites(t_world *map)
+{
+	int x;
+	int y;
+	int count;
+
+	x = 0;
+	while (x < map->max_x)
+	{
+		y = 0;
+		while (y < map->max_y)
+		{
+			if (map->worldmap[x][y] == 4)
+				count++;
+			y++;
+		}
+		x++;
+	}
+	return (count);
+}
+
+t_spriteptr	*get_sprites(t_param *p)
+{
+	t_spriteptr *sprites;
+	int x;
+	int y;
+	int i;
+
+	p->mlx->spr_number = count_sprites(p->map);
+	sprites = (malloc(p->mlx->spr_number * sizeof(t_spriteptr)));
+	p->mlx->spr_order = (malloc(p->mlx->spr_number * sizeof(int)));
+	x = 0;
+	i = 0;
+	while (x < p->map->max_x)
+	{
+		y = 0;
+		while (y < p->map->max_y)
+		{
+			if (p->map->worldmap[x][y] == 4)
+				{
+					sprites[i].x = x;
+					sprites[i++].y = y;
+				}
+			y++;
+		}
+		x++;
+	}
+	return (sprites);
+}
+
 int		parse_cub(char *fname, t_param *p)
 {
 	int		fd;
@@ -117,12 +167,12 @@ int		parse_cub(char *fname, t_param *p)
 	p->map->max_y = get_max_y(lines);
 	init_map(p->map);
 	fill_map(lines, fd, p);
-	print_map(p->map);
 	if (!(checkmap(p, p->pl->pos_x, p->pl->pos_y)))
 	{
 		write(1, "ERROR: MAP UNCLOSED\n", 20);
 		exit(EXIT_FAILURE);
 	}
-	print_map(p->map);
+	p->mlx->sprites = get_sprites(p);
+	p->mlx->sprite_hit = 0;
 	return (1);
 }

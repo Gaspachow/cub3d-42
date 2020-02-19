@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:30:16 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/17 18:23:30 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 12:43:12 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	rotation(t_player *pl)
 
 int		can_move(int pos)
 {
-	if (pos == 1 || pos == 2)
+	if (pos == 1 || pos == 4)
 		return (0);
 	return(1);
 }

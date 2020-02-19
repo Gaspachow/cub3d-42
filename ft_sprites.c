@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/18 14:22:55 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/19 13:10:49 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	sort_sprites(t_mlx *mlx, t_player *pl)
 	i = -1;
 	while (++i < mlx->spr_number)
 	{
-		distance[i] = ((pl->pos_x - mlx->sprites[i]->x) * (pl->pos_x -
-		mlx->sprites[i]->x) + (pl->pos_y - mlx->sprites[i]->y) * (pl->pos_y -
-		mlx->sprites[i]->y));
+		distance[i] = ((pl->pos_x - mlx->sprites[i].x) * (pl->pos_x -
+		mlx->sprites[i].x) + (pl->pos_y - mlx->sprites[i].y) * (pl->pos_y -
+		mlx->sprites[i].y));
 		mlx->spr_order[i] = i;
 	}
 	i = -1;
@@ -101,7 +101,7 @@ void	drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray)
 	i = 0;
 	while (i < mlx->spr_number)
 	{
-		sprite_ptr = *(mlx->sprites[mlx->spr_order[i++]]);
+		sprite_ptr = mlx->sprites[mlx->spr_order[i++]];
 		sprite.spritex = (sprite_ptr.x + 0.5) - pl->pos_x;
 		sprite.spritey = (sprite_ptr.y + 0.5) - pl->pos_y;
 		sprite.invdet = 1.0 / (pl->plane_x *
