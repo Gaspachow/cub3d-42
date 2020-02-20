@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:17:59 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 14:46:31 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:31:02 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ void	make_txt(int dir, char *str, t_param *p)
 	while (*str == ' ')
 		str++;
 	if (dir == 1)
-		p->mlx->txt->txt1_path = ft_strdup(str);
+		p->mlx->txt->txt1_path = str;
 	if (dir == 2)
-		p->mlx->txt->txt2_path = ft_strdup(str);
+		p->mlx->txt->txt2_path = str;
 	if (dir == 3)
-		p->mlx->txt->txt3_path = ft_strdup(str);
+		p->mlx->txt->txt3_path = str;
 	if (dir == 4)
-		p->mlx->txt->txt4_path = ft_strdup(str);
+		p->mlx->txt->txt4_path = str;
 	if (dir == 5)
-		p->mlx->txt->spr_path = ft_strdup(str);
+		p->mlx->txt->spr_path = str;
 	check_txt(dir, p);
 }

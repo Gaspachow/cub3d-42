@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 11:05:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 15:04:36 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 17:30:22 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ int		choose_param(char c, char *str, t_param *p)
 	else if (c == 'S' && *(str + 1) == 'O' && *(str + 2) == ' ')
 		make_txt(2, str + 2, p);
 	else if (c == 'W' && *(str + 1) == 'E' && *(str + 2) == ' ')
-		make_txt(3, str + 2, p);
-	else if (c == 'E' && *(str + 1) == 'A' && *(str + 2) == ' ')
 		make_txt(4, str + 2, p);
+	else if (c == 'E' && *(str + 1) == 'A' && *(str + 2) == ' ')
+		make_txt(3, str + 2, p);
 	else if (c == 'S' && *(str + 1) == ' ')
 		make_txt(5, str + 1, p);
 	else if (c == '1' || c == '0' || c == '2')

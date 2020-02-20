@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:40:02 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 21:26:10 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:37:11 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	make_map(char **lines, t_world *map, t_param *p)
 			map->worldmap[x][y++] = lines[i][j++] - '0';
 		}
 		j = 0;
-		free(lines[i]);
 		i++;
 		x++;
 	}

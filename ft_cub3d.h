@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 14:35:46 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:40:26 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ typedef struct		s_param
 	int				t3_done;
 	int				t4_done;
 	int				spr_done;
+	char			**lines;
 }					t_param;
 
 int			rgb_int(int red, int green, int blue);

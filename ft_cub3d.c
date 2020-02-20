@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 11:20:49 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 17:26:05 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		close_game(t_param *coucou)
 	exit(EXIT_SUCCESS);
 }
 
-int		main()
+int		main(int ac, char **av)
 {
 	t_mlx		mlx;
 	t_player	one;
@@ -44,7 +44,14 @@ int		main()
 	params.map = &map;
 	params.ray = &ray;
 	mlx.txt = &text;
-	parse_cub("ok.cub", &params);
+	if (ac > 3)
+		put_error("ERROR\nTOO MANY ARGUMENTS\n", &params);
+	if (ac < 2)
+		put_error("ERROR\nNOT ENOUGH ARGUMENTS\n", &params);
+	parse_cub(av[1], &params);
+	if (ac == 3)
+		if (ft_strncmp("--saved", av[2], 8))
+			make_screenshot(&mlx);
 	if (!(mlx.ptr = mlx_init()))
 		return (EXIT_FAILURE);
 	if (!(mlx.win = mlx_new_window(mlx.ptr, mlx.screen_w, mlx.screen_h, "cub3d")))

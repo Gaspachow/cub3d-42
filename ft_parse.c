@@ -6,13 +6,13 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 15:43:12 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 18:43:53 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
 
-int		get_lines(char ***lines, char ***tmp, int fd)
+char	**get_lines(char **lines, char **tmp, int fd)
 {
 	char	*s;
 	int		i;
@@ -24,21 +24,21 @@ int		get_lines(char ***lines, char ***tmp, int fd)
 	while (ret)
 	{
 		ret = get_next_line(fd, &s);
-		(*tmp) = (*lines);
+		tmp = lines;
 		j = 0;
-		(*lines) = malloc((i + 1) * sizeof(char *));
-		if ((*tmp))
-			while ((*tmp)[j])
+		lines = malloc((i + 1) * sizeof(char *));
+		if (tmp)
+			while (tmp[j])
 			{
-				(*lines)[j] = (*tmp)[j];
+				lines[j] = tmp[j];
 				j++;
 			}
-		free((*tmp));
-		(*lines)[j++] = s;
-		(*lines)[j] = 0;
+		free(tmp);
+		lines[j++] = s;
+		lines[j] = 0;
 		i++;
 	}
-	return (i - 1);
+	return (lines);
 }
 
 char	**parse_parameters(t_param *p, char **lines)
@@ -97,18 +97,16 @@ int		parse_cub(char *fname, t_param *p)
 {
 	int		fd;
 	char	**tmp;
-	char	**lines;
 	char	**maplines;
 
 	fd = open(fname, O_RDONLY);
-	lines = 0;
-	get_lines(&lines, &tmp, fd);
+	p->lines = 0;
+	p->lines = get_lines(p->lines, tmp, fd);
 	close(fd);
 	init_params(p);
-	maplines = parse_parameters(p, lines);
+	maplines = parse_parameters(p, p->lines);
 	verify_params(p);
 	parse_map(p, maplines);
-	free(lines);
 	p->mlx->sprites = get_sprites(p);
 	p->mlx->sprite_hit = 0;
 	return (1);
