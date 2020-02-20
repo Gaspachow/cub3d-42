@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 13:50:54 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 15:43:12 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**parse_parameters(t_param *p, char **lines)
 		}
 		i++;
 	}
-	put_error("ERROR: NO MAP FOUND\n", p);
+	put_error("ERROR\nNO MAP FOUND\n", p);
 	return (lines);
 }
 
@@ -74,16 +74,23 @@ void	init_params(t_param *p)
 	p->mlx->sr = -1;
 	p->mlx->sg = -1;
 	p->mlx->sb = -1;
+	p->t1_done = 0;
+	p->t2_done = 0;
+	p->t3_done = 0;
+	p->t4_done = 0;
+	p->spr_done = 0;
 }
 
 void	verify_params(t_param *p)
 {
 	if (!(p->screen_done))
-		put_error("ERROR: NO RESOLUTION INPUT\n", p);
+		put_error("ERROR\nNO RESOLUTION INPUT\n", p);
 	if (!(p->floor_done))
-		put_error("ERROR: NO FLOOR COLOR INPUT\n", p);
+		put_error("ERROR\nNO FLOOR COLOR INPUT\n", p);
 	if (!(p->sky_done))
-		put_error("ERROR: NO CEILING COLOR INPUT\n", p);
+		put_error("ERROR\nNO CEILING COLOR INPUT\n", p);
+	if (!p->t1_done || !p->t2_done || !p->t3_done || !p->t4_done || !p->spr_done)
+		put_error("ERROR\nMISSING TEXTURE PATH\n", p);
 }
 
 int		parse_cub(char *fname, t_param *p)

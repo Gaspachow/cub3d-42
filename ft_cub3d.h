@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 13:37:41 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 14:35:46 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ typedef	struct		s_txt
 	int				text5_sl;
 	int				text5_sb;
 	int				text5_ed;
+	char			*txt1_path;
+	char			*txt2_path;
+	char			*txt3_path;
+	char			*txt4_path;
+	char			*spr_path;
 }					t_txt;
 
 typedef struct 		s_parse
@@ -198,6 +203,11 @@ typedef struct		s_param
 	int				floor_done;
 	int				screen_done;
 	int				sky_done;
+	int				t1_done;
+	int				t2_done;
+	int				t3_done;
+	int				t4_done;
+	int				spr_done;
 }					t_param;
 
 int			rgb_int(int red, int green, int blue);
@@ -229,5 +239,6 @@ void		check_player(t_param *p);
 int			choose_param(char c, char *str, t_param *p);
 int			ft_cubatoi_r(const char *str);
 int			ft_cubatoi_f(const char *str);
+void		make_txt(int dir, char *str, t_param *p);
 
 #endif

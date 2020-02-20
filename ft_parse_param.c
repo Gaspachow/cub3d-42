@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 11:05:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 13:40:42 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 15:04:36 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	make_resolution(char *str, t_param *p)
 {
-	str++;
 	if (p->screen_done)
 		put_error("ERROR\nMultiple resolution inputs\n", p);
 	p->screen_done = 1;
-	if (*str != ' ')
-		put_error("ERROR\nWrong resolution input\n", p);
 	while (*str == ' ')
 		str++;
 	p->mlx->screen_w = ft_cubatoi_r(&(*str));
@@ -38,9 +35,8 @@ void	make_resolution(char *str, t_param *p)
 
 void	make_floor(char *str, t_param *p)
 {
-	str++;
-	if (*str != ' ')
-		put_error("ERROR\nWrong floor color input\n", p);
+	if (p->floor_done)
+		put_error("ERROR\nMultiple floor color inputs\n", p);
 	while (*str == ' ')
 		str++;
 	p->mlx->fr = ft_cubatoi_f(str);
@@ -65,9 +61,8 @@ void	make_floor(char *str, t_param *p)
 
 void	make_sky(char *str, t_param *p)
 {
-	str++;
-	if (*str != ' ')
-		put_error("ERROR\nWrong ceiling color input\n", p);
+	if (p->sky_done)
+		put_error("ERROR\nMultiple ceiling color inputs\n", p);
 	while (*str == ' ')
 		str++;
 	p->mlx->sr = ft_cubatoi_f(str);
@@ -92,13 +87,25 @@ void	make_sky(char *str, t_param *p)
 
 int		choose_param(char c, char *str, t_param *p)
 {
-	if (c == 'R')
-		make_resolution(str, p);
-	if (c == 'F')
-		make_floor(str, p);
-	if (c == 'C')
-		make_sky(str, p);
-	if (c == '1' || c == '0' || c == '2')
+	if (c == 'R' && *(str + 1) == ' ')
+		make_resolution(str + 1, p);
+	else if (c == 'F' && *(str + 1) == ' ')
+		make_floor(str + 1, p);
+	else if (c == 'C' && *(str + 1) == ' ')
+		make_sky(str + 1, p);
+	else if (c == 'N' && *(str + 1) == 'O' && *(str + 2) == ' ')
+		make_txt(1, str + 2, p);
+	else if (c == 'S' && *(str + 1) == 'O' && *(str + 2) == ' ')
+		make_txt(2, str + 2, p);
+	else if (c == 'W' && *(str + 1) == 'E' && *(str + 2) == ' ')
+		make_txt(3, str + 2, p);
+	else if (c == 'E' && *(str + 1) == 'A' && *(str + 2) == ' ')
+		make_txt(4, str + 2, p);
+	else if (c == 'S' && *(str + 1) == ' ')
+		make_txt(5, str + 1, p);
+	else if (c == '1' || c == '0' || c == '2')
 		return (0);
+	else if (c)
+		put_error("ERROR\nNON-EMPTY LINE WITH WRONG IDENTIFIER\n", p);
 	return (1);
 }
