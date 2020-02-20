@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 14:04:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 11:44:51 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 20:37:30 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,18 @@ int		bmp_data(int fd, t_mlx *mlx, int padsize)
 	return (1);
 }
 
-int		make_screenshot(t_mlx *mlx)
+int		make_screenshot(t_param *p)
 {
 	int padsize;
 	int fd;
 
-	padsize = (4 - ((int)mlx->screen_w * 3) % 4) % 4;
+	run_game(p);
+	padsize = (4 - ((int)p->mlx->screen_w * 3) % 4) % 4;
 	if ((fd = open("screenshot.bmp", O_WRONLY |
 	O_CREAT, 0777 | O_TRUNC | O_APPEND)) < 0)
 		return (0);
-	bmp_header(fd, mlx->screen_h, mlx->screen_w, padsize);
-	bmp_data(fd, mlx, padsize);
+	bmp_header(fd, p->mlx->screen_h, p->mlx->screen_w, padsize);
+	bmp_data(fd, p->mlx, padsize);
 	close(fd);
 	return (1);
 }

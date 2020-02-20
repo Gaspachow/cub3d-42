@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 18:40:26 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 20:44:25 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef struct		s_param
 	int				t4_done;
 	int				spr_done;
 	char			**lines;
+	int				screenshot;
 }					t_param;
 
 int			rgb_int(int red, int green, int blue);
@@ -230,7 +231,7 @@ int			move(t_param *params);
 int 		close_game(t_param *coucou);
 void		define_sprite_line(t_mlx *mlx, t_ray *ray);
 void		drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
-int			make_screenshot(t_mlx *mlx);
+int			make_screenshot(t_param *p);
 int			parse_cub(char *fname, t_param *p);
 void		checkmap(t_param *p, int x, int y);
 void		parse_map(t_param *p, char **maplines);

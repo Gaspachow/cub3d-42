@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:17:59 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 20:08:42 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 20:10:21 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	check_txtbis(int dir, t_param *p)
 			p->spr_done = 1;
 	}
 }
-
 
 void	check_txt(int dir, t_param *p)
 {
