@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 20:20:47 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 13:37:41 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,12 @@ typedef struct		s_mlx
 	t_spriteptr		*sorted_sprites;
 	int				*spr_order;
 	int				spr_number;
+	int				fr;
+	int				fg;
+	int				fb;
+	int				sr;
+	int				sg;
+	int				sb;
 }					t_mlx;
 
 typedef struct		s_player
@@ -189,6 +195,9 @@ typedef struct		s_param
 	t_ray			*ray;
 	int				i;
 	int				j;
+	int				floor_done;
+	int				screen_done;
+	int				sky_done;
 }					t_param;
 
 int			rgb_int(int red, int green, int blue);
@@ -217,5 +226,8 @@ void		parse_map(t_param *p, char **maplines);
 void		put_error(char *message, t_param *p);
 t_spriteptr	*get_sprites(t_param *p);
 void		check_player(t_param *p);
+int			choose_param(char c, char *str, t_param *p);
+int			ft_cubatoi_r(const char *str);
+int			ft_cubatoi_f(const char *str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 16:52:52 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 11:20:49 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int		main()
 	params.ray = &ray;
 	mlx.txt = &text;
 	parse_cub("ok.cub", &params);
-	mlx.screen_h = 720;
-	mlx.screen_w = 720;
 	if (!(mlx.ptr = mlx_init()))
 		return (EXIT_FAILURE);
 	if (!(mlx.win = mlx_new_window(mlx.ptr, mlx.screen_w, mlx.screen_h, "cub3d")))

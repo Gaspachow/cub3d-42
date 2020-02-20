@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 21:31:33 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 13:50:54 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,6 @@ int		get_lines(char ***lines, char ***tmp, int fd)
 	return (i - 1);
 }
 
-int	make_resolution(char c, char *str, t_param *p)
-{
-	return (1);
-}
-
-int	choose_param(char c, char *str, t_param *p)
-{
-	if (c == 'R')
-		make_resolution(c, str, p);
-	if (c == '1' || c == '0' || c == '2')
-		return (0);
-	return (1);
-}
-
 char	**parse_parameters(t_param *p, char **lines)
 {
 	int i;
@@ -74,8 +60,30 @@ char	**parse_parameters(t_param *p, char **lines)
 		}
 		i++;
 	}
-	put_error("ERROR: NO MAP FOUND", p);
+	put_error("ERROR: NO MAP FOUND\n", p);
 	return (lines);
+}
+
+void	init_params(t_param *p)
+{
+	p->screen_done = 0;
+	p->floor_done = 0;
+	p->mlx->fr = -1;
+	p->mlx->fg = -1;
+	p->mlx->fb = -1;
+	p->mlx->sr = -1;
+	p->mlx->sg = -1;
+	p->mlx->sb = -1;
+}
+
+void	verify_params(t_param *p)
+{
+	if (!(p->screen_done))
+		put_error("ERROR: NO RESOLUTION INPUT\n", p);
+	if (!(p->floor_done))
+		put_error("ERROR: NO FLOOR COLOR INPUT\n", p);
+	if (!(p->sky_done))
+		put_error("ERROR: NO CEILING COLOR INPUT\n", p);
 }
 
 int		parse_cub(char *fname, t_param *p)
@@ -89,7 +97,9 @@ int		parse_cub(char *fname, t_param *p)
 	lines = 0;
 	get_lines(&lines, &tmp, fd);
 	close(fd);
+	init_params(p);
 	maplines = parse_parameters(p, lines);
+	verify_params(p);
 	parse_map(p, maplines);
 	free(lines);
 	p->mlx->sprites = get_sprites(p);

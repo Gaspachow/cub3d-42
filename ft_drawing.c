@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:06:04 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/06 14:24:38 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 13:38:02 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		drawline(t_mlx *mlx, int x, int text_x)
 	text = mlx->txt_data;
 	while (++i < mlx->l_start)
 	{
-		*(mlx->d_ad + x + i * mlx->sl / 4) = rgb_int(135, 197, 214);
+		*(mlx->d_ad + x + i * mlx->sl / 4) = rgb_int(mlx->sr, mlx->sg, mlx->sb);
 	}
 	while (i < mlx->l_end)
 	{
@@ -44,7 +44,8 @@ int		drawline(t_mlx *mlx, int x, int text_x)
 		pos += step;
 	}
 	while (i < mlx->screen_h)
-		*(mlx->d_ad + x + i++ * mlx->sl / 4) = rgb_int(125, 125, 125);
+		*(mlx->d_ad + x + i++ * mlx->sl / 4) =
+		rgb_int(mlx->fr, mlx->fg, mlx->fb);
 	return (1);
 }
 
