@@ -6,11 +6,30 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:17:59 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 18:31:02 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/20 20:08:42 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_cub3d.h"
+
+void	check_txtbis(int dir, t_param *p)
+{
+	if (dir == 4)
+	{
+		if (p->t4_done)
+			put_error("ERROR\nEAST Texture set more than once\n", p);
+		else
+			p->t4_done = 1;
+	}
+	if (dir == 5)
+	{
+		if (p->spr_done)
+			put_error("ERROR\nSPRITE Texture set more than once\n", p);
+		else
+			p->spr_done = 1;
+	}
+}
+
 
 void	check_txt(int dir, t_param *p)
 {
@@ -35,26 +54,19 @@ void	check_txt(int dir, t_param *p)
 		else
 			p->t3_done = 1;
 	}
-	if (dir == 4)
-	{
-		if (p->t4_done)
-			put_error("ERROR\nEAST Texture set more than once\n", p);
-		else
-			p->t4_done = 1;
-	}
-	if (dir == 5)
-	{
-		if (p->spr_done)
-			put_error("ERROR\nSPRITE Texture set more than once\n", p);
-		else
-			p->spr_done = 1;
-	}
+	if (dir == 4 || dir == 5)
+		check_txtbis(dir, p);
 }
 
 void	make_txt(int dir, char *str, t_param *p)
 {
+	int fd;
+
 	while (*str == ' ')
 		str++;
+	if ((fd = open(str, O_RDONLY)) < 0)
+		put_error("ERROR\nWRONG TEXTURE PATH INPUT", p);
+	close (fd);
 	if (dir == 1)
 		p->mlx->txt->txt1_path = str;
 	if (dir == 2)
