@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:17:45 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/21 15:08:40 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 15:30:07 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	walldist_dir(t_mlx *mlx, t_world *map, t_player *pl, t_ray *ray)
 		(1 - map->step_x) / 2) / ray->dir_x;
 		ray->wallx = pl->pos_y + ray->walldist * ray->dir_y;
 	}
-	ray->Zbuffer[mlx->x] = ray->walldist;
+	ray->zbuffer[mlx->x] = ray->walldist;
 }
 
 void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
