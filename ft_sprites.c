@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 14:35:26 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/19 13:10:49 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 15:46:22 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	drawspritelines(t_sprtools *sprite, t_mlx *mlx, t_ray *ray)
 		sprite->y = sprite->drawstarty;
 		if (sprite->transformy > 0 && sprite->x >= 0 &&
 		sprite->x < mlx->screen_w &&
-		sprite->transformy < (float)ray->Zbuffer[sprite->x])
+		sprite->transformy < (float)ray->zbuffer[sprite->x])
 			while (sprite->y < sprite->drawendy)
 			{
 				sprite->d = (sprite->y) * 256 - mlx->screen_h * 128 +

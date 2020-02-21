@@ -10,8 +10,6 @@ FLAGS	= -Wall -Wextra -Werror
 
 INCLUDEH	= -I minilibx
 
-INCLUDEHXTRA = -L minilibx_opengl -l libmlx.a  -lmlx -framework OpenGL -framework AppKit
-
 MLX_DIR		=	minilibx_opengl
 
 

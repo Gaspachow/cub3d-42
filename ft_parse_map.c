@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:40:02 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/21 14:54:23 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 16:16:13 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	make_map(char **lines, t_world *map, t_param *p)
 		{
 			while (lines[i][j] == ' ')
 				j++;
-			map->worldmap[x][y++] = lines[i][j++] - '0';
+			if (lines[i][j])
+				map->worldmap[x][y++] = lines[i][j++] - '0';
 		}
 		j = 0;
 		i++;
@@ -37,13 +38,25 @@ void	make_map(char **lines, t_world *map, t_param *p)
 	}
 }
 
-int		get_max_x(char **lines)
+int		get_max_x(char **lines, t_param *p)
 {
 	int i;
+	int j;
+	int	emptyline;
 
 	i = 0;
+	emptyline = 0;
 	while (lines[i])
+	{
+		j = 0;
+		while (lines[i][j] == ' ')
+			j++;
+		if (!lines[i][j])
+			emptyline = 1;
+		if (lines[i][j] && emptyline)
+			put_error("ERROR\nAdditional Input after map\n", p);
 		i++;
+	}
 	return (i);
 }
 
@@ -96,7 +109,7 @@ void	init_map(t_world *map)
 
 void	parse_map(t_param *p, char **maplines)
 {
-	p->map->max_x = get_max_x(maplines);
+	p->map->max_x = get_max_x(maplines, p);
 	p->map->max_y = get_max_y(maplines);
 	init_map(p->map);
 	make_map(maplines, p->map, p);
