@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:13:22 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 20:44:25 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 15:19:45 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef	struct		s_txt
 	char			*spr_path;
 }					t_txt;
 
-typedef struct 		s_parse
+typedef struct		s_parse
 {
 	int				i;
 	int				j;
@@ -74,7 +74,6 @@ typedef struct 		s_parse
 	int				fd;
 	char			*s;
 }					t_parse;
-
 
 typedef	struct		s_spriteptr
 {
@@ -102,7 +101,6 @@ typedef struct		s_sprtools
 	int				y;
 	int				d;
 }					t_sprtools;
-
 
 typedef struct		s_mlx
 {
@@ -189,7 +187,7 @@ typedef struct		s_ray
 	char			walldir;
 	double			wallx;
 	int				wallside;
-	double			Zbuffer[4000];
+	double			zbuffer[4000];
 }					t_ray;
 
 typedef struct		s_param
@@ -212,35 +210,35 @@ typedef struct		s_param
 	int				screenshot;
 }					t_param;
 
-int			rgb_int(int red, int green, int blue);
-int			drawline(t_mlx *mlx, int x, int text_x);
-int			player_init(int x, int y, char dir, t_param *p);
-void		get_step(t_world *map, t_ray *ray, t_player *pl);
-void		raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray);
-void		rotation(t_player *pl);
-void		mov_updown(t_player *pl, t_world *map, float speed);
-void		mov_leftright(t_player *pl, t_world *map, float speed);
-int			key_press(int key, t_param *params);
-int			key_release(int key, t_param *params);
-int			run_game(t_param *params);
-void		txt_init(t_txt *text, t_mlx *mlx);
-void		define_line(t_mlx *mlx, t_ray *ray);
-void		choose_texture(t_mlx *mlx, t_ray *ray);
-int			key_release(int key, t_param *p);
-int			move(t_param *params);
-int 		close_game(t_param *coucou);
-void		define_sprite_line(t_mlx *mlx, t_ray *ray);
-void		drawsprites(t_mlx *mlx, t_player *pl, t_world *map, t_ray *ray);
-int			make_screenshot(t_param *p);
-int			parse_cub(char *fname, t_param *p);
-void		checkmap(t_param *p, int x, int y);
-void		parse_map(t_param *p, char **maplines);
-void		put_error(char *message, t_param *p);
-t_spriteptr	*get_sprites(t_param *p);
-void		check_player(t_param *p);
-int			choose_param(char c, char *str, t_param *p);
-int			ft_cubatoi_r(const char *str);
-int			ft_cubatoi_f(const char *str);
-void		make_txt(int dir, char *str, t_param *p);
+int					rgb_int(int red, int green, int blue);
+int					drawline(t_mlx *mlx, int x, int text_x);
+int					player_init(int x, int y, char dir, t_param *p);
+void				get_step(t_world *map, t_ray *ray, t_player *pl);
+void				raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray);
+void				rotation(t_player *pl);
+void				mov_updown(t_player *pl, t_world *map, float speed);
+void				mov_leftright(t_player *pl, t_world *map, float speed);
+int					key_press(int key, t_param *params);
+int					key_release(int key, t_param *params);
+int					run_game(t_param *params);
+void				txt_init(t_txt *text, t_mlx *mlx);
+void				define_line(t_mlx *mlx, t_ray *ray);
+void				choose_texture(t_mlx *mlx, t_ray *ray);
+int					key_release(int key, t_param *p);
+int					move(t_param *params);
+int					close_game(t_param *coucou);
+void				define_sprite_line(t_mlx *mlx, t_ray *ray);
+void				drawsprites(t_mlx *m, t_player *p, t_world *mp, t_ray *r);
+void				make_screenshot(t_param *p, char *str);
+int					parse_cub(char *fname, t_param *p);
+void				checkmap(t_param *p, int x, int y);
+void				parse_map(t_param *p, char **maplines);
+void				put_error(char *message, t_param *p);
+t_spriteptr			*get_sprites(t_param *p);
+void				check_player(t_param *p);
+int					choose_param(char c, char *str, t_param *p);
+int					ft_cubatoi_r(const char *str);
+int					ft_cubatoi_f(const char *str);
+void				make_txt(int dir, char *str, t_param *p);
 
 #endif

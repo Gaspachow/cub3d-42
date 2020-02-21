@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 11:05:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 20:07:14 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 11:50:52 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	make_sky(char *str, t_param *p)
 
 int		choose_param(char c, char *str, t_param *p)
 {
+	while (*str == ' ')
+		str++;
 	if (c == 'R' && *(str + 1) == ' ')
 		make_resolution(str + 1, p);
 	else if (c == 'F' && *(str + 1) == ' ')

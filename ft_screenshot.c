@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 14:04:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 20:37:30 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 14:42:22 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		bmp_data(int fd, t_mlx *mlx, int padsize)
 	return (1);
 }
 
-int		make_screenshot(t_param *p)
+int		take_screenshot(t_param *p)
 {
 	int padsize;
 	int fd;
@@ -79,4 +79,16 @@ int		make_screenshot(t_param *p)
 	bmp_data(fd, p->mlx, padsize);
 	close(fd);
 	return (1);
+}
+
+void	make_screenshot(t_param *p, char *str)
+{
+	if (ft_strncmp("--save", str, 7) != 0)
+		put_error("ERROR\nUnrecognized second argument\n", p);
+	p->screenshot = 1;
+	write(1, "Saving screenshot...\n", 21);
+	if (!take_screenshot(p))
+		put_error("ERROR\nCouldn't create/open screenshot.bmp\n", p);
+	write(1, "Screenshot saved!\n", 18);
+	close_game(p);
 }

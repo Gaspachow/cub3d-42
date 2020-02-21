@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:43:55 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 20:45:40 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 14:53:30 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,32 @@ int		close_game(t_param *p)
 	exit(EXIT_SUCCESS);
 }
 
+int		start_all(t_param *p, int ac, char **av)
+{
+	t_txt	text;
+
+	p->mlx->txt = &text;
+	parse_cub(av[1], p);
+	if (!(p->mlx->ptr = mlx_init()))
+		put_error("ERROR\n Mlx function failed", p);
+	txt_init(p->mlx->txt, p->mlx);
+	p->mlx->img = mlx_new_image(p->mlx->ptr, p->mlx->screen_w,
+				p->mlx->screen_h);
+	p->mlx->d_ad = (int *)mlx_get_data_addr(p->mlx->img,
+				&(p->mlx->bits), &(p->mlx->sl), &(p->mlx->ed));
+	if (ac == 3)
+		make_screenshot(p, av[2]);
+	if (!(p->mlx->win = mlx_new_window(p->mlx->ptr, p->mlx->screen_w,
+		p->mlx->screen_h, "cub3d")))
+		put_error("ERROR\n Mlx function failed", p);
+	mlx_hook(p->mlx->win, 2, 1, key_press, (void *)p);
+	mlx_key_hook(p->mlx->win, key_release, (void *)p);
+	mlx_hook(p->mlx->win, 17, 1, close_game, (void *)p);
+	mlx_loop_hook(p->mlx->ptr, run_game, (void *)p);
+	mlx_loop(p->mlx->ptr);
+	return (1);
+}
+
 int		main(int ac, char **av)
 {
 	t_mlx		mlx;
@@ -46,40 +72,15 @@ int		main(int ac, char **av)
 	t_world		map;
 	t_ray		ray;
 	t_param		params;
-	t_txt		text;
 
 	params.mlx = &mlx;
 	params.pl = &one;
 	params.map = &map;
 	params.ray = &ray;
-	mlx.txt = &text;
+	params.lines = 0;
 	if (ac > 3)
 		put_error("ERROR\nTOO MANY ARGUMENTS\n", &params);
 	if (ac < 2)
 		put_error("ERROR\nNOT ENOUGH ARGUMENTS\n", &params);
-	parse_cub(av[1], &params);
-	if (!(mlx.ptr = mlx_init()))
-		return (EXIT_FAILURE);
-	txt_init(&text, &mlx);
-	mlx.img = mlx_new_image(mlx.ptr, mlx.screen_w, mlx.screen_h);
-	mlx.d_ad = (int *)mlx_get_data_addr(mlx.img, &(mlx.bits), &(mlx.sl), &(mlx.ed));
-	if (ac == 3)
-	{
-		params.screenshot = 1;
-		write(1, "Saving screenshot...\n", 21);
-		make_screenshot(&params);
-		write(1, "Screenshot saved!\n", 18);
-		close_game(&params);
-	}
-	else
-	{
-		params.screenshot = 0;
-	}
-	if (!(mlx.win = mlx_new_window(mlx.ptr, mlx.screen_w, mlx.screen_h, "cub3d")))
-		return (EXIT_FAILURE);
-	mlx_hook(mlx.win, 2, 1, key_press, (void *)&params);
-	mlx_key_hook(mlx.win, key_release, (void *)&params);
-	mlx_hook(mlx.win, 17, 1, close_game, (void *)&params);
-	mlx_loop_hook ( mlx.ptr, run_game, (void *)&params);
-	mlx_loop(mlx.ptr);
+	start_all(&params, ac, av);
 }

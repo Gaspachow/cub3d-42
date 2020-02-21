@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 14:56:41 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 20:14:48 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 14:59:26 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	txt_init(t_txt *text, t_mlx *mlx)
 	&text->text5_sb, &text->text5_sl, &text->text5_ed);
 }
 
-void	set_cameraNS(char dir, t_player *pl)
+void	set_camerans(char dir, t_player *pl)
 {
 	if (dir == 'N')
 	{
@@ -54,7 +54,7 @@ void	set_cameraNS(char dir, t_player *pl)
 	}
 }
 
-void	set_cameraEW(char dir, t_player *pl)
+void	set_cameraew(char dir, t_player *pl)
 {
 	if (dir == 'W')
 	{
@@ -81,14 +81,14 @@ int		player_init(int x, int y, char dir, t_param *p)
 	p->pl->pos_x = x + 0.5;
 	p->pl->pos_y = y + 0.5;
 	if (dir == 'N' || dir == 'S')
-		set_cameraNS(dir, p->pl);
+		set_camerans(dir, p->pl);
 	else
-		set_cameraEW(dir, p->pl);
+		set_cameraew(dir, p->pl);
 	p->pl->forward = 0;
 	p->pl->backward = 0;
 	p->pl->left = 0;
 	p->pl->right = 0;
 	p->pl->rightrot = 0;
 	p->pl->leftrot = 0;
-	return(1);
+	return (1);
 }

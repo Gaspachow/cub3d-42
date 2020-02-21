@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:17:59 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 20:10:21 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 15:06:34 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	make_txt(int dir, char *str, t_param *p)
 		str++;
 	if ((fd = open(str, O_RDONLY)) < 0)
 		put_error("ERROR\nWRONG TEXTURE PATH INPUT", p);
-	close (fd);
+	close(fd);
 	if (dir == 1)
 		p->mlx->txt->txt1_path = str;
 	if (dir == 2)

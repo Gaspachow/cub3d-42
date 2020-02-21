@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 18:43:53 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 14:58:36 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**parse_parameters(t_param *p, char **lines)
 			j++;
 		if (!choose_param(lines[i][j], lines[i], p))
 		{
-			return(&lines[i]);
+			return (&lines[i]);
 		}
 		i++;
 	}
@@ -89,7 +89,8 @@ void	verify_params(t_param *p)
 		put_error("ERROR\nNO FLOOR COLOR INPUT\n", p);
 	if (!(p->sky_done))
 		put_error("ERROR\nNO CEILING COLOR INPUT\n", p);
-	if (!p->t1_done || !p->t2_done || !p->t3_done || !p->t4_done || !p->spr_done)
+	if (!p->t1_done || !p->t2_done || !p->t3_done ||
+		!p->t4_done || !p->spr_done)
 		put_error("ERROR\nMISSING TEXTURE PATH\n", p);
 }
 

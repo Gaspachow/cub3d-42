@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 15:40:02 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 18:37:11 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 14:54:23 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	make_map(char **lines, t_world *map, t_param *p)
 		j = 0;
 		while (lines[i][j])
 		{
-			while(lines[i][j] == ' ')
+			while (lines[i][j] == ' ')
 				j++;
 			map->worldmap[x][y++] = lines[i][j++] - '0';
 		}
@@ -100,7 +100,6 @@ void	parse_map(t_param *p, char **maplines)
 	p->map->max_y = get_max_y(maplines);
 	init_map(p->map);
 	make_map(maplines, p->map, p);
-	// free(maplines);
 	check_player(p);
 	checkmap(p, p->pl->pos_x, p->pl->pos_y);
 }

@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 15:17:45 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/20 17:47:28 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/21 15:08:40 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ void	raycast(t_player *pl, t_mlx *mlx, t_world *map, t_ray *ray)
 		choose_texture(mlx, ray);
 		ray->wallx -= floor(ray->wallx);
 		mlx->text_x = ray->wallx * (mlx->text_sl / 4);
-		if(ray->wallside == 0 && ray->dir_x > 0) 
+		if (ray->wallside == 0 && ray->dir_x > 0)
 			mlx->text_x = (mlx->text_sl / 4) - mlx->text_x - 1;
-      	else if(ray->wallside == 1 && ray->dir_y < 0) 
-		  	mlx->text_x = (mlx->text_sl / 4) - mlx->text_x - 1;
+		else if (ray->wallside == 1 && ray->dir_y < 0)
+			mlx->text_x = (mlx->text_sl / 4) - mlx->text_x - 1;
 		drawline(mlx, mlx->x, mlx->text_x);
 		mlx->x++;
 	}
