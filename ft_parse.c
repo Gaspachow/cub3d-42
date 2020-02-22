@@ -6,7 +6,7 @@
 /*   By: gsmets <gsmets@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 14:24:08 by gsmets            #+#    #+#             */
-/*   Updated: 2020/02/21 14:58:36 by gsmets           ###   ########.fr       */
+/*   Updated: 2020/02/22 11:04:03 by gsmets           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ int		parse_cub(char *fname, t_param *p)
 	char	**tmp;
 	char	**maplines;
 
-	fd = open(fname, O_RDONLY);
+	if ((fd = open(fname, O_RDONLY)) < 0)
+		put_error("ERROR\nmap file not found\n", p);
 	p->lines = 0;
 	p->lines = get_lines(p->lines, tmp, fd);
 	close(fd);

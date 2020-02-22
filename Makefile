@@ -1,8 +1,24 @@
-SRCS	= $(wildcard ft*.c)
+SRCS	=	ft_checkmap.c\
+			ft_cub3d.c\
+			ft_cubatoi.c\
+			ft_drawing.c\
+			ft_errors.c\
+			ft_init.c\
+			ft_keypress.c\
+			ft_movement.c\
+			ft_parse_map.c\
+			ft_parse_param.c\
+			ft_parse_player.c\
+			ft_parse_sprites.c\
+			ft_parse_textures.c\
+			ft_parse.c\
+			ft_raycast.c\
+			ft_screenshot.c\
+			ft_sprites.c
 
 OBJS	= $(SRCS:.c=.o)
 
-NAME	= cub3d.out
+NAME	= cub3D
 
 GCC		= gcc
 
